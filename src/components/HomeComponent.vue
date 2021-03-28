@@ -128,6 +128,8 @@ export default {
       this.snackbarNotification.color = "primary";
       this.snackbarNotification.snackMessage = "Pinging partner...";
       this.snackbarNotification.displayTime = 7000;
+      //   vibrate user's device first
+      window.navigator.vibrate(200); // vibrate for 200ms
     },
     // user to singout
     async signOut() {

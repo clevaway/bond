@@ -13,13 +13,22 @@ const firebaseConfig = {
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 
-// Google auth
+// utils
+const db = firebase.firestore()
+// collection references
+const usersCollection = db.collection('users')
 
+
+
+// Google auth
 firebaseApp.googleSignIn = async () => {
   try {
     const provider = new firebase.auth.GoogleAuthProvider();
     await firebase.auth().signInWithPopup(provider);
     store.commit("setCurrentUser", firebase.auth().currentUser); // Update the state in the store
+    let user = firebase.auth().currentUser
+    // create the user in firestore DB
+    creatUserInDataBase(user.uid, user.displayName, user.email)
     return true;
   } catch (error) {
     return error;
@@ -27,7 +36,6 @@ firebaseApp.googleSignIn = async () => {
 };
 
 // SingOut
-
 firebaseApp.signOut = async () => {
     try {
       await firebase.auth().signOut();
@@ -37,4 +45,19 @@ firebaseApp.signOut = async () => {
       return error;
     }
   };
+
+     // create user profile object in userCollections on firebase db
+     async function creatUserInDataBase(userId, name, email){
+     await usersCollection.doc(userId).set({
+      userId: userId,
+      userName: name,
+      userEmail: email,
+      // partnerId: null,
+      // partnerName: null,
+      // partnerEmail: null,
+      // partnerPhotoUrl: null,
+      // vibrate : false,
+    })
+  }
+
 export default firebaseApp;
