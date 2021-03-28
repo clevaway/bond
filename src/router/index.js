@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Auth from '../views/Auth.vue'
+import store from '@/store'
 
 Vue.use(VueRouter)
 
@@ -9,7 +10,10 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    meta: {
+      auth: true,
+    }
   },
   {
     path: '/auth',
@@ -32,4 +36,15 @@ const router = new VueRouter({
   routes
 })
 
+// navigation guard
+router.beforeEach((to, from, next) => {
+  // route guard. if user is not connected prevent them from going anywhere
+  if (to.meta.auth && !store.state.currentUser) {
+    next({
+      path: "/auth",
+    });
+  } else {
+    next();
+  }
+});
 export default router
