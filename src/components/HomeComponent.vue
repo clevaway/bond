@@ -7,7 +7,7 @@
       max-width="500"
       ><center>
         <h3 class="title font-weight-regular mb-5">
-          Add your partner to connect
+          Add your partner to get started.
         </h3>
 
         <v-avatar size="80" class="mb-5">
@@ -67,7 +67,10 @@
           small
           color="pink"
         >
-          <v-icon dark> mdi-heart </v-icon>
+          <v-icon dark> mdi-heart </v-icon> </v-btn
+        ><br />
+        <v-btn @click="signOut" class="mt-8" icon color="pink">
+          <v-icon>mdi-logout</v-icon>
         </v-btn>
       </center>
     </v-card>
@@ -97,6 +100,7 @@
 // @ is an alias to /src
 // import HelloWorld from "@/components/HelloWorld.vue";
 import store from "@/store";
+import database from "@/services/database";
 
 export default {
   data() {
@@ -124,6 +128,11 @@ export default {
       this.snackbarNotification.color = "primary";
       this.snackbarNotification.snackMessage = "Pinging partner...";
       this.snackbarNotification.displayTime = 7000;
+    },
+    // user to singout
+    async signOut() {
+      await database.signOut();
+      this.$router.push("/auth");
     },
   },
 };

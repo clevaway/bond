@@ -11,11 +11,11 @@ const firebaseConfig = {
     measurementId: "G-QYS8RKXXD0"
 };
 
-const database = firebase.initializeApp(firebaseConfig);
+const firebaseApp = firebase.initializeApp(firebaseConfig);
 
 // Google auth
 
-database.googleSignIn = async () => {
+firebaseApp.googleSignIn = async () => {
   try {
     const provider = new firebase.auth.GoogleAuthProvider();
     await firebase.auth().signInWithPopup(provider);
@@ -28,14 +28,13 @@ database.googleSignIn = async () => {
 
 // SingOut
 
-database.signOut = async () => {
+firebaseApp.signOut = async () => {
     try {
       await firebase.auth().signOut();
       store.commit("setCurrentUser", null); // Update the state in the store
-      store.commit("setCurrentUserRole", null);
       return true;
     } catch (error) {
       return error;
     }
   };
-export default database;
+export default firebaseApp;
