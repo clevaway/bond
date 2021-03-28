@@ -4,9 +4,7 @@
       <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
 
       <router-link to="/">
-        <v-toolbar-title id="logo"
-          >Connected <sup>v 0.1.0</sup>
-        </v-toolbar-title>
+        <v-toolbar-title id="logo">Bond <sup>v 0.1.0</sup> </v-toolbar-title>
       </router-link>
 
       <v-spacer></v-spacer>
