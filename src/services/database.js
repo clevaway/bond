@@ -60,4 +60,23 @@ firebaseApp.signOut = async () => {
     })
   }
 
+  // vibrate both users phones
+
+
+// realtime firebase
+usersCollection.onSnapshot(snapshot => {
+    const arrayOfUsers = [];
+  snapshot.forEach(doc => {
+    let user = doc.data()
+      // console.log(user)
+    arrayOfUsers.push(user)
+  })
+  console.log(arrayOfUsers)
+  arrayOfUsers.map(user => {
+    if(user.userId === store.state.currentUser.uid){
+      console.log(user);
+    }
+  })
+})
+
 export default firebaseApp;
