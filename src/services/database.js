@@ -14,9 +14,8 @@ const firebaseConfig = {
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 
 // utils
-const db = firebase.firestore()
-// collection references
-const usersCollection = db.collection('users')
+const db = firebase.database()
+
 
 
 
@@ -27,8 +26,8 @@ firebaseApp.googleSignIn = async () => {
     await firebase.auth().signInWithPopup(provider);
     store.commit("setCurrentUser", firebase.auth().currentUser); // Update the state in the store
     let user = firebase.auth().currentUser
-    // create the user in firestore DB
-    creatUserInDataBase(user.uid, user.displayName, user.email)
+    // create room name
+    createSocketConnection(user.uid)
     return true;
   } catch (error) {
     return error;
@@ -46,37 +45,22 @@ firebaseApp.signOut = async () => {
     }
   };
 
-     // create user profile object in userCollections on firebase db
-     async function creatUserInDataBase(userId, name, email){
-     await usersCollection.doc(userId).set({
-      userId: userId,
-      userName: name,
-      userEmail: email,
-      // partnerId: null,
-      // partnerName: null,
-      // partnerEmail: null,
-      // partnerPhotoUrl: null,
-      // vibrate : false,
-    })
+  function createSocketConnection(userId) {
+    db.ref('users/' + userId).set({
+      socketConnectionsName: "Room1",
+    });
   }
 
+  if(store.state.currentUser){
+  let getUpdate = db.ref('users/'+store.state.currentUser.uid);
+  getUpdate.on('value', (snapshot) => {
+    const data = snapshot.val();
+    console.log(data)
+  });
+}
+  
+
   // vibrate both users phones
-
-
-// realtime firebase
-usersCollection.onSnapshot(snapshot => {
-    const arrayOfUsers = [];
-  snapshot.forEach(doc => {
-    let user = doc.data()
-      // console.log(user)
-    arrayOfUsers.push(user)
-  })
-  console.log(arrayOfUsers)
-  arrayOfUsers.map(user => {
-    if(user.userId === store.state.currentUser.uid){
-      console.log(user);
-    }
-  })
-})
+  
 
 export default firebaseApp;
