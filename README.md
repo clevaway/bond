@@ -45,8 +45,8 @@ Please read [CODE_OF_CONDUCT.MD](https://github.com/FotieMConstant/bond/blob/mai
 ## BondReviewers
 Contributors helping to review/merge pull requests:
 
-* [Dilan Longla](https://github.com/dilanlongla) 
-* [Fotie M. Constant](https://github.com/FotieMConstant)
+* @[dilanlongla](https://github.com/dilanlongla) 
+* @[fotiecodes](https://github.com/FotieMConstant)
 * [Name](Link)
 
 ## License
