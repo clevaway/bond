@@ -1,4 +1,6 @@
-   <h1 align="center">Bond</h1>
+<p align="center">
+    <img src="https://raw.githubusercontent.com/FotieMConstant/bond/main/logo.png"/>
+</p>
 <p align="center">
   <strong>Keep connected, And you’ll always stay in touch 🚀</strong>
 </p>
