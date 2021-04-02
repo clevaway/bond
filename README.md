@@ -45,9 +45,8 @@ Please read [CODE_OF_CONDUCT.MD](https://github.com/FotieMConstant/bond/blob/mai
 ## BondReviewers
 Contributors helping to review/merge pull requests:
 
-* @[dilanlongla](https://github.com/dilanlongla) 
-* @[fotiecodes](https://github.com/FotieMConstant)
-* [Name](Link)
+* [@dilanlongla](https://github.com/dilanlongla) 
+* [@fotiecodes](https://github.com/FotieMConstant)
 
 ## License
 This project is licensed under the MIT License - see the LICENSE.md file for details  
