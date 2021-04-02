@@ -133,6 +133,10 @@ export default {
         if (!socketConnectionName) {
           console.log("socketConnectionName IS NOT in DB");
           this.createSocketConnectionInDB(store.state.currentUser.uid);
+          this.snackbarNotification.status = true;
+          this.snackbarNotification.color = "green";
+          this.snackbarNotification.snackMessage = "💑Contacting partner...";
+          this.snackbarNotification.displayTime = 5000;
         } else {
           // if socket is in database just use it
           console.log("socketConnectionName IS IN DB");
@@ -142,6 +146,11 @@ export default {
           // receiving info from backend about created room status
           socket.on("createRoomStatus", (message) => {
             console.log(message);
+            this.snackbarNotification.status = true;
+            this.snackbarNotification.color = "green";
+            this.snackbarNotification.snackMessage =
+              "❤ Now Connected to partner!";
+            this.snackbarNotification.displayTime = 5000;
           });
         }
       } else {
@@ -162,6 +171,10 @@ export default {
         this.establishSocketConnection(socketConnectionName);
       } catch (error) {
         console.log(error);
+        this.snackbarNotification.status = true;
+        this.snackbarNotification.color = "green";
+        this.snackbarNotification.snackMessage = "❤ Now Connected to partner!";
+        this.snackbarNotification.displayTime = 5000;
       }
     },
     // function to create connection
