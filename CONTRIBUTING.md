@@ -10,18 +10,12 @@ The code of conduct is described in [CODE_OF_CONDUCT.md](https://github.com/Foti
 ## What do I need to know to help?
 If you are looking to help to with a code contribution our project uses **React, HTML/CSS, Javascript and Node.js for our server**. If you don't feel ready to make a code contribution yet, no problem! You can also check out the [documentation issues](https://github.com/FotieMConstant/bond/issues) or the design issues that we have [here](https://github.com/FotieMConstant/bond/issues).
 
-If you are interested in making a code contribution and would like to learn more about the technologies that we use, check out the list below.
-
-* [A First Timers Guide to an Open Source Project](https://auth0.com/blog/a-first-timers-guide-to-an-open-source-project/) by Luke Oliff.
-* [React Fundamentals - Full Course for Beginners](https://www.youtube.com/watch?v=6Ied4aZxUzc) by freeCodeCamp.org.
-* [Add resource here](link here) by author here.
-
 ## How do I make a contribution?
 Never made an open source contribution before? Wondering how contributions work in the in our project? Here's a quick rundown!
 
 1. Find an issue that you are interested in addressing or a feature that you would like to add.
-2. Fork the repository associated with the issue to your local GitHub organization or repository. This means that you will have a copy of the repository under **your-GitHub-username/lantube-v2**.
-3. Clone the repository to your local machine using git clone https://github.com/github-username/lantube-v2.git.
+2. Fork the repository associated with the issue to your local GitHub organization or repository. This means that you will have a copy of the repository under **your-GitHub-username/bond**.
+3. Clone the repository to your local machine using git clone https://github.com/github-username/bond.git.
 4. Create a new branch for your fix using **git checkout -b branch-name-here**.
 5. Make the appropriate changes for the issue you are trying to address or the feature that you want to add.
 6. Use **git add insert-paths-of-changed-files-here** to add the file contents of the changed files to the "snapshot" git uses to manage the state of the project, also known as the index.
