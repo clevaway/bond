@@ -78,8 +78,8 @@
 </template>
 
 <script>
-import database from "@/services/database";
 import store from "@/store";
+import firebase from "firebase";
 
 export default {
   components: {},
@@ -94,16 +94,12 @@ export default {
     };
   },
   methods: {
-    // Google signin
+    // Google signin method
     async googleSignIn() {
-      let result = await database.googleSignIn();
-      // Check if the result is good or bad
-      if (result.message) {
-        this.snackbarNotification.status = true;
-        this.snackbarNotification.color = "red";
-        this.snackbarNotification.snackMessage = result.message;
-        this.snackbarNotification.displayTime = 6000;
-      } else {
+      try {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        await firebase.auth().signInWithPopup(provider);
+        store.commit("setCurrentUser", firebase.auth().currentUser); // Update the state in the store
         // alert("You are now signed-in");
         this.snackbarNotification.status = true;
         this.snackbarNotification.color = "green";
@@ -112,9 +108,14 @@ export default {
         console.log("You are logged in as => ");
         console.log(store.state.currentUser);
         this.$router.push("/"); // redirects user when are logged in
+      } catch (error) {
+        this.snackbarNotification.status = true;
+        this.snackbarNotification.color = "red";
+        this.snackbarNotification.snackMessage = error;
+        this.snackbarNotification.displayTime = 6000;
       }
     },
-    // GEnd og google SignIn
+    // End of google SignIn
   },
 
   computed: {},

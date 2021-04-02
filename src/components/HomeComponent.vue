@@ -100,7 +100,9 @@
 // @ is an alias to /src
 // import HelloWorld from "@/components/HelloWorld.vue";
 import store from "@/store";
-import database from "@/services/database";
+import socket from "@/plugins/socketio.js";
+import firebaseApp from "@/firebaseConfig";
+import firebase from "firebase";
 
 export default {
   data() {
@@ -117,8 +119,60 @@ export default {
   },
   mounted: function () {
     this.getCurrentUserLoggedIn();
+    this.getsocketConnectionNameFromDB();
   },
   methods: {
+    // function to setup connection
+    establishSocketConnection(socketConnectionName) {
+      // only connect to room when user is __authenticated
+      if (store.state.currentUser) {
+        console.log("User Authenticated...");
+        console.log("Establishing Socket Connection with server...");
+        console.log(socketConnectionName);
+        // if socketConnectionName is not in db create one and store in db
+        if (!socketConnectionName) {
+          console.log("socketConnectionName IS NOT in DB");
+          this.createSocketConnectionInDB(store.state.currentUser.uid);
+        } else {
+          // if socket is in database just use it
+          console.log("socketConnectionName IS IN DB");
+          // sending the create room event to the server alongside the room name to be created
+          // create room
+          socket.emit("createRoom", socketConnectionName.socketConnectionName);
+          // receiving info from backend about created room status
+          socket.on("createRoomStatus", (message) => {
+            console.log(message);
+          });
+        }
+      } else {
+        console.log("User not Authenticated!");
+      }
+    },
+    // function to get the socketConnectionName to connect to from firebase database
+    async getsocketConnectionNameFromDB() {
+      // utils
+      const db = firebaseApp.database();
+
+      let socketConnectionName = "";
+      let getUpdate = db.ref("users/" + store.state.currentUser.uid);
+      try {
+        let snapshot = await getUpdate.once("value");
+        socketConnectionName = snapshot.val();
+        // console.log(socketConnectionName);
+        this.establishSocketConnection(socketConnectionName);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    // function to create connection
+    createSocketConnectionInDB(userId) {
+      // utils
+      const db = firebaseApp.database();
+      db.ref("users/" + userId).set({
+        socketConnectionName: "Room1",
+      });
+    },
+    // function to get curren logged in user
     getCurrentUserLoggedIn() {
       this.currentUser = store.state.currentUser;
       console.log(this.currentUser);
@@ -131,10 +185,18 @@ export default {
       //   vibrate user's device first
       window.navigator.vibrate(200); // vibrate for 200ms
     },
-    // user to singout
+    // user singout function
     async signOut() {
-      await database.signOut();
-      this.$router.push("/auth");
+      try {
+        await firebase.auth().signOut();
+        store.commit("setCurrentUser", null); // Update the state in the store
+        this.$router.push("/auth");
+      } catch (error) {
+        this.snackbarNotification.status = true;
+        this.snackbarNotification.color = "red";
+        this.snackbarNotification.snackMessage = error;
+        this.snackbarNotification.displayTime = 6000;
+      }
     },
   },
 };
