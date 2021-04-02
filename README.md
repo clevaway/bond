@@ -1,4 +1,33 @@
-# Bond
+   <h1 align="center">Bond</h1>
+<p align="center">
+  <strong>Keep connected, And you’ll always stay in touch 🚀</strong>
+</p>
+<p align="center">
+  <a href="https://discord.com/invite/DJHntQ8PQr">
+    <img src="https://img.shields.io/badge/Discord-Online-green?style=for-the-badge&logo=appveyor" alt="discord - users online" />
+  </a>
+</p>
+
+<h3 align="center">  
+  <a href="#">Contribute</a>
+  <span> · </span>
+  <a href="https://discord.com/invite/DJHntQ8PQr">Community</a>
+  <span> · </span>
+  <a href="#">Documentation</a>
+</h3>
+
+<p align="center"><b>https://bond-nu.vercel.app/</b></p>
+
+---
+
+## Structure
+
+| Codebase |      Description      |
+| :------- | :-------------------: |
+| okok     |   Node backend        |
+| eru      |   Vue frontend      |
+| ndole    |   Mobile App          |
+
 An app to send your loved one a vibration with a lovely sound, so they know you miss them. Anytime you want to, anywhere they are.
 
 ## Getting Started🚀💻
@@ -21,7 +50,7 @@ Contributors helping to review/merge pull requests:
 * [Name](Link)
 
 ## License
-This project is licensed under the MIT License - see the LICENSE.md file for details
+This project is licensed under the MIT License - see the LICENSE.md file for details  
 
 <!-- ## Project setup
 ```
