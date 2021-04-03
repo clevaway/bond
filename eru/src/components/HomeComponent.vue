@@ -149,7 +149,7 @@ export default {
             this.snackbarNotification.status = true;
             this.snackbarNotification.color = "green";
             this.snackbarNotification.snackMessage =
-              "❤ Now Connected to partner!";
+              "❤ You can now ping your partner!";
             this.snackbarNotification.displayTime = 5000;
           });
         }
@@ -190,13 +190,23 @@ export default {
       this.currentUser = store.state.currentUser;
       console.log(this.currentUser);
     },
+    // ping partner funtion
     pingPartner() {
-      this.snackbarNotification.status = true;
-      this.snackbarNotification.color = "primary";
-      this.snackbarNotification.snackMessage = "Pinging partner...";
-      this.snackbarNotification.displayTime = 7000;
-      //   vibrate user's device first
-      window.navigator.vibrate(200); // vibrate for 200ms
+      let socketConnectionName = "Room1";
+      console.log(socketConnectionName);
+      // emiting event to backend to vibrate all devices in this room
+      socket.emit("vibrate", socketConnectionName);
+
+      // vibrate all devices in this room, event coming from backend
+      socket.on("vibrateThisDevice", (message) => {
+        console.log(message);
+        this.snackbarNotification.status = true;
+        this.snackbarNotification.color = "green";
+        this.snackbarNotification.snackMessage = "❤ Vibe!!!";
+        this.snackbarNotification.displayTime = 5000;
+        //   vibrate user's device first
+        window.navigator.vibrate(200); // vibrate for 200ms
+      });
     },
     // user singout function
     async signOut() {
