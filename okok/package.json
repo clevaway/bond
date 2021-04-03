@@ -1,11 +1,9 @@
 {
   "scripts": {
-    "serve": "node_modules/.bin/nodemon server.js --exec",
     "start": "node server.js",
     "test": "Non"
   },
   "dependencies": {
-    "@vercel/node": "^1.9.1",
     "express": "^4.17.1",
     "socket.io": "^4.0.1"
   }
