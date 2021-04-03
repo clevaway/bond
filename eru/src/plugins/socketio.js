@@ -1,4 +1,4 @@
 // plugin for websocket connection
 import io from "socket.io-client";
-const socket = io("http://localhost:3000", { transports: ["websocket"] });
+const socket = io(":3000", { transports: ["websocket"] });
 export default socket;
