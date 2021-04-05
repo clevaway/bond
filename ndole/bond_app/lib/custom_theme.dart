@@ -5,10 +5,19 @@ ThemeData buildLightTheme() => ThemeData.light().copyWith(
       cardColor: Colors.white,
       backgroundColor: Colors.grey[100],
       accentColor: Colors.grey[800],
+      scaffoldBackgroundColor: Colors.white,
       appBarTheme: AppBarTheme(
+        centerTitle: true,
         brightness: Brightness.dark,
         elevation: 0.0,
         color: textLight,
+        textTheme: TextTheme(
+          headline6: TextStyle(
+            color: Colors.black,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         iconTheme: IconThemeData(
           color: Colors.grey[900],
         ),
@@ -21,8 +30,16 @@ ThemeData buildDarkTheme() => ThemeData.dark().copyWith(
       backgroundColor: Colors.grey[900],
       accentColor: Colors.grey[400],
       appBarTheme: AppBarTheme(
+        centerTitle: true,
         brightness: Brightness.dark,
         elevation: 0.0,
+        textTheme: TextTheme(
+          headline6: TextStyle(
+            color: Colors.white,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         color: Colors.grey[900],
         iconTheme: IconThemeData(
           color: Colors.grey[400],
