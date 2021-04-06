@@ -1,6 +1,8 @@
+import 'package:bond_app/providers/theme_provider.dart';
 import 'package:bond_app/services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -71,10 +73,22 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final checkTheme = Provider.of<ThemeProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Bond'),
         actions: [
+          IconButton(
+            icon: Icon(
+              checkTheme.mTheme == false
+                  ? Icons.brightness_3_rounded
+                  : Icons.brightness_6_rounded,
+              color: checkTheme.mTheme == false ? Colors.black : Colors.red,
+            ),
+            onPressed: () {
+              checkTheme.checkTheme();
+            },
+          ),
           IconButton(
             icon: Icon(
               Icons.logout,
@@ -97,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           child: Center(
             child: Column(
               children: [

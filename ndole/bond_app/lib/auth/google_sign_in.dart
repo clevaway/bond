@@ -45,6 +45,7 @@ class _GoogleSignInScreenState extends State<GoogleSignInScreen> {
                 height: 70,
                 width: 250,
                 child: Card(
+                  // color: Colors.grey[200],
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -55,9 +56,6 @@ class _GoogleSignInScreenState extends State<GoogleSignInScreen> {
                       ),
                       Text(
                         'Sign in with Google',
-                        style: TextStyle(
-                          color: Colors.black54,
-                        ),
                       ),
                     ],
                   ),
