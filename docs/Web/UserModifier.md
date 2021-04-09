@@ -130,5 +130,48 @@
  ```
  
  
+ ### 6. upload_display_photo 
+ 
+ <p>This method uploads a new photo of a user directly to firebase storage. </p>
+
+
+``` JavaScript 
+
+    async upload_display_photo(data:String(Base64encoded) , success_callback : (): Any ,error_callback : () : Any){
+        let reference = this.storage.ref(this.pathing + "/displayphoto/");
+        let status = await reference.putString(data, "base64"); //UPLOAD TASK
+        if(status.snapshot.state == this.storage.TaskState.ERROR){
+            error_callback("issue_uploading_photo");
+        }
+        else{
+            success_callback();
+        }
+    }
+
+
+```
+
+
+ 
+ ### 7. start_contact_request 
+ <p>This method sets the contact request in both user's document in firebase. </p>
+ 
+ ``` JavaScript 
+ 
+ async start_contact_request(user:String(uid) , success_callback : () : Any , error_callback : () : Any){
+        if(await this.user_exist(user) == true){
+            //this user
+            this.set_db_value({type: "outgoing" ,status : "pending" , to: user},
+                success_callback,error_callback , this.pathing);
+            //other user
+            this.set_db_value({type: "incoming", status :"pending" , from : this.uid},
+            success_callback,error_callback,"User" + user);
+            
+        }
+        else{
+            error_callback("USER_NOT_FOUND");
+        }
+    }
  
  
+   ```
