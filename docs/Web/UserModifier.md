@@ -3,8 +3,16 @@
 <p>Summary : User Modifier handles all dealings with the modification of the user data model! </p>
 
 
-# Code Break-Down: 
+# Code Break-Down:
+## Properties
+     db : Firebase Database Object
+     storage : Firebase Storage Object
+     uid: String
+     pathing : String
 
+
+
+## Methods
 ### 1. set_db_value
 
 <p>This method is a basic abstraction to setting data under any database reference. </p>
@@ -51,7 +59,7 @@
  
   ``` JavaScript 
   
-       async user_exist(uid){
+       async user_exist(uid:String){
         let snapshot = await this.db.ref("Users" + uid).get();//wait on the data
         if (snapshot.exists()){
             return true;
@@ -62,3 +70,65 @@
     }
   
   ```
+  
+  
+ ### 4. song_exists
+ 
+ 
+ ``` JavaScript
+
+ async song_exists(path:String){
+        let song_reference = this.storage.ref(path);
+        let data =await  song_reference.listAll();
+        if(data.items > 0 ){
+            return true;
+        }
+        else{
+            return false;
+        }
+
+    }
+
+
+```
+### 4. priority_is_valid
+
+
+<p>This method is validate the priority inside before the priority for a contact group is set. You can learn about contact priority groups here. </p>
+
+
+  ``` JavaScript
+  
+        priority_is_valid(){
+        
+        if(priority <0 || priority >5){
+            return false;
+        }
+        return true;
+    }
+  
+  ```
+  
+  ### 5. create_new_group 
+  
+  
+ <p>This method is used to create a new priority group. It utilizes the 'priority_is_valid' method to ensure safe group creation. </p>
+ 
+ 
+ ``` JavaScript 
+ create_new_group(name:String , priority:String ,success_callback: ():Any ,error_callback : () : Any {
+        if(this.priority_is_valid(priority)){
+            this.set_db_value({priority: priority} ,
+                success_callback,error_callback,
+                this.pathing +"/contacts/groups/"+name);
+        }
+        else{
+            error_callback("PRI_TOO_HIGH/LOW");
+        }
+    }
+ 
+ ```
+ 
+ 
+ 
+ 
