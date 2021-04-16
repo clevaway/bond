@@ -1,49 +1,21 @@
+"use strict";
+// Importing express
 const express = require('express');
 const app = express();
-const server = require('http').Server(app);
-const io = require('socket.io')(server);
-const cors = require('cors');
-app.use(cors());
 
-io.on('connection', function (client) {
-        console.log('A user connected => '+client.id);
-        // client.on('event', data => { /* … */ });
-        // When client disconnects
-        client.on('disconnect', () => { 
-            console.log("Client => "+client.id+" disconnected")
-         });
-        //  create or join a room event from frontend
-        client.on('createRoom', function(room) {
-          client.join(room);
-          console.log(`Socket ${client.id} created or joined a room ${room}`)
-          io.to(room).emit('createRoomStatus', "Only users in Room => "+room+" can see this message");
+// enabling CORS to accept from all origins
+app.all("*", (req, res, next) => {
+  console.log(`${new Date()} - request for ${req.path}`);
+  res.set("Access-Control-Allow-Origin", "*");
+  next();
+});
 
-        });
+// the various endpoints
+app.get("/", (req, res) => {
+  res.send("welcome to the bond-api endpoint.");
+});
 
-        // function to listen and emit vibration to devices
-        client.on('vibrate', function(room) {
-          console.log(`vibration all devices in room => ${room}`)
-          io.to(room).emit('vibrateThisDevice', "Vibrating devices in Room => "+room);
-
-        });
-
-
-
-         
-        //  to ping server from test
-         client.on('pingServer', (message) =>{
-             console.log(message);
-             client.emit("message",'Message from backed, with client id => '+client.id)
-         })
-          // sending data to client side
-          client.on('video', (videoLink) => {
-            client.emit('video', videoLink);
-              console.log("sending to clients =>"+videoLink)
-          });
-
- 
-})
-
-server.listen(3000, function(){
+// setting the port of the process or a default port 
+app.listen(process.env.PORT || 3000, function(){
     console.log('listening on port: 3000');
 });
