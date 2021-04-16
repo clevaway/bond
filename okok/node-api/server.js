@@ -6,27 +6,27 @@ const cors = require('cors');
 app.use(cors());
 
 io.on('connection', function (client) {
-        console.log('a user connected => '+client.id);
+        console.log('A user connected => '+client.id);
         // client.on('event', data => { /* … */ });
         // When client disconnects
         client.on('disconnect', () => { 
             console.log("Client => "+client.id+" disconnected")
          });
-        //  creating a room event from frontend
+        //  create or join a room event from frontend
         client.on('createRoom', function(room) {
           client.join(room);
-          console.log(`socket ${client.id} created room ${room}`)
-          io.to(room).emit('createRoomStatus', "Only users in Room => "+room+" can see this message")
+          console.log(`Socket ${client.id} created or joined a room ${room}`)
+          io.to(room).emit('createRoomStatus', "Only users in Room => "+room+" can see this message");
 
         });
-          //  Joining a room
-          client.on('joinRoom', function(room) {
-            client.join(room);
-            console.log(`socket ${client.id} has joined room ${room}`)
-            // broadcasting to users in a room
-            io.to(room).emit('someoneJoined', "Someone joined!")
-  
-          });
+
+        // function to listen and emit vibration to devices
+        client.on('vibrate', function(room) {
+          console.log(`vibration all devices in room => ${room}`)
+          io.to(room).emit('vibrateThisDevice', "Vibrating devices in Room => "+room);
+
+        });
+
 
 
          
