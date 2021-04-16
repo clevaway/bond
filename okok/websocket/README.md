@@ -1,4 +1,4 @@
-# okok - node backend
+# okok - websocket
  - dependencies
     - express
     - socket.io
