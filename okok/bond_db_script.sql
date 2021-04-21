@@ -9,6 +9,7 @@
 create table person (
    uid                  varchar(254)         not null,
    name                 varchar(254)         null,
+   email                varchar(254)         null,
    username             varchar(254)         null,
    photo                varchar(254)         null,
    constraint pk_person primary key (uid)
