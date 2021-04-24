@@ -40,7 +40,7 @@ export default {
     Button,
     ButtonGoogle,
     LikeButton,
-    ProfileAvatar
+    ProfileAvatar,
     Appbar,
   },
 };
