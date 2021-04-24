@@ -15,15 +15,21 @@
     <div class="mt-5">
       <ButtonGoogle text="Button" />
     </div>
+    <div class="mt-5">
+      <LikeButton/>
+    </div>
   </v-container>
 </template>
 <script>
 import Button from "@/components/userComponents/Button.vue";
 import ButtonGoogle from "@/components/userComponents/ButtonGoogle.vue";
+import LikeButton from "@/components/userComponents/LikeButton.vue";
+
 export default {
   components: {
     Button,
     ButtonGoogle,
+    LikeButton,
   },
 };
 </script>
