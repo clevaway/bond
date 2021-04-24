@@ -5,7 +5,7 @@
   <strong>Keep connected, And you’ll always stay in touch 🚀</strong>
 </p>
 <p align="center">
-  <a href="https://discord.com/invite/DJHntQ8PQr">
+  <a href="https://discord.gg/cA8zVJ7wgR">
     <img src="https://img.shields.io/badge/Discord-Online-green?style=for-the-badge&logo=appveyor" alt="discord - users online" />
   </a>
 </p>
