@@ -5,17 +5,19 @@
       v-if="loading"
       class="__RegularBtn"
       depressed
-      color="error"
+      color="primary"
       rounded
       min-width="120"
       loading
+      dense
+      dark
     >
     </v-btn>
     <v-btn
       v-else-if="disabled"
       class="__RegularBtn disabled"
       depressed
-      color="#fd6868"
+      color="primary"
       rounded
       min-width="120"
       disabled
@@ -26,7 +28,7 @@
       v-else
       class="__RegularBtn"
       depressed
-      color="error"
+      color="primary"
       rounded
       min-width="120"
     >

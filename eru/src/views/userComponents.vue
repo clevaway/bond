@@ -16,20 +16,25 @@
       <ButtonGoogle text="Button" />
     </div>
     <div class="mt-5">
-      <LikeButton/>
+      <LikeButton />
     </div>
+    <v-card class="mt-5">
+      <Appbar routeToHome="/auth" routeToProfile="/profile" />
+    </v-card>
   </v-container>
 </template>
 <script>
 import Button from "@/components/userComponents/Button.vue";
 import ButtonGoogle from "@/components/userComponents/ButtonGoogle.vue";
 import LikeButton from "@/components/userComponents/LikeButton.vue";
+import Appbar from "@/components/userComponents/Appbar.vue";
 
 export default {
   components: {
     Button,
     ButtonGoogle,
     LikeButton,
+    Appbar,
   },
 };
 </script>
