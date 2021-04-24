@@ -24,9 +24,10 @@ export default {
   border: 8px solid;
 }
 .__iconaddphoto {
-  margin-top: 82px;
+  margin-bottom: -52px;
   margin-left: -34px;
-  position: fixed;
+  position: sticky;
   cursor: pointer;
+  z-index: 5;
 }
 </style>
