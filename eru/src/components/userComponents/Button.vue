@@ -11,6 +11,7 @@
       loading
       dense
       dark
+      @click="$emit('click')"
     >
     </v-btn>
     <v-btn
@@ -21,6 +22,7 @@
       rounded
       min-width="120"
       disabled
+      @click="$emit('click')"
     >
       {{ text }}
     </v-btn>
@@ -31,6 +33,7 @@
       color="primary"
       rounded
       min-width="120"
+      @click="$emit('click')"
     >
       {{ text }}
     </v-btn>
