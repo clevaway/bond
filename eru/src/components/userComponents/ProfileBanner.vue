@@ -1,6 +1,6 @@
 <template>
   <span>
-    <v-parallax height="200" :src="parallaxImage"> </v-parallax>
+    <v-parallax height="200" with="100" :src="parallaxImage"> </v-parallax>
   </span>
 </template>
 <script>

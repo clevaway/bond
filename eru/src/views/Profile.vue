@@ -3,7 +3,7 @@
     <ProfileBanner
       parallaxImage="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
     />
-    <v-row class="mt-n16" align="center" justify="center">
+    <v-row class="mt-n16 ma-0" align="center" justify="center">
       <v-col class="text-center" cols="12">
         <ProfileAvatar :img="currentUser.photoURL" />
         <h2 class="mt-3 font-weight-light">{{ currentUser.displayName }}</h2>
