@@ -99,6 +99,6 @@ export default {
 
 <style lang="scss" scoped>
 #wrapper {
-  margin-top: 10%;
+  margin-top: 90px;
 }
 </style>
