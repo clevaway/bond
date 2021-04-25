@@ -19,6 +19,11 @@
       <LikeButton />
     </div>
     <div class="mt-5">
+      <ProfileBanner
+        parallaxImage="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
+      />
+    </div>
+    <div class="mt-5">
       <BondAvatars
         yourPhoto="https://avatars.githubusercontent.com/u/42372656?v=4"
         partnerPhoto="https://www.superselected.com/wp-content/uploads/2019/02/Black-Woman-Braided-Hair.jpg"
@@ -41,6 +46,7 @@ import LikeButton from "@/components/userComponents/LikeButton.vue";
 import BondAvatars from "@/components/userComponents/BondAvatars.vue";
 import ProfileAvatar from "@/components/userComponents/ProfileAvatar.vue";
 import Appbar from "@/components/userComponents/Appbar.vue";
+import ProfileBanner from "@/components/userComponents/ProfileBanner.vue";
 
 export default {
   components: {
@@ -50,6 +56,7 @@ export default {
     ProfileAvatar,
     Appbar,
     BondAvatars,
+    ProfileBanner,
   },
 };
 </script>
