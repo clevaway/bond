@@ -19,7 +19,7 @@
       <LikeButton />
     </div>
     <div class="mt-5">
-      <BondAvatar
+      <BondAvatars
         yourPhoto="https://avatars.githubusercontent.com/u/42372656?v=4"
         partnerPhoto="https://www.superselected.com/wp-content/uploads/2019/02/Black-Woman-Braided-Hair.jpg"
       />
@@ -38,7 +38,7 @@
 import Button from "@/components/userComponents/Button.vue";
 import ButtonGoogle from "@/components/userComponents/ButtonGoogle.vue";
 import LikeButton from "@/components/userComponents/LikeButton.vue";
-import BondAvatar from "@/components/userComponents/BondAvatar.vue";
+import BondAvatars from "@/components/userComponents/BondAvatars.vue";
 import ProfileAvatar from "@/components/userComponents/ProfileAvatar.vue";
 import Appbar from "@/components/userComponents/Appbar.vue";
 
@@ -49,7 +49,7 @@ export default {
     LikeButton,
     ProfileAvatar,
     Appbar,
-    BondAvatar,
+    BondAvatars,
   },
 };
 </script>
