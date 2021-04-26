@@ -18,7 +18,6 @@ import store from "./store";
 
 export default {
   name: "App",
-
   components: {
     Appbar,
     Footer,
@@ -32,6 +31,18 @@ export default {
     loggedIn() {
       return store.state.currentUser;
     },
+  },
+  mounted: function () {
+    // set dark theme if true from store
+    if (store.state.darkModeOn) {
+      // dark mode
+      let darkModeOn = (this.$vuetify.theme.dark = !this.$vuetify.theme.dark);
+      store.commit("setDarkModeOn", darkModeOn); // setting the state of dark mode in store to be true
+      console.log("dark mode ON");
+    } else {
+      store.commit("setDarkModeOn", false);
+      console.log("dark mode OFF");
+    }
   },
 };
 </script>
