@@ -32,15 +32,20 @@
   </span>
 </template>
 <script>
+import store from "@/store";
+
 export default {
   props: {
     routeToHome: String,
     routeToProfile: String,
   },
+  mounted: function () {},
   methods: {
     // function to switch to darkMode
     darkMode() {
-      this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
+      let darkModeOn = (this.$vuetify.theme.dark = !this.$vuetify.theme.dark);
+      store.commit("setDarkModeOn", darkModeOn); // setting the state of dark mode in store to be true or false defending on what is gotten
+      console.log("setting darkmode to => " + darkModeOn);
     },
   },
 };
