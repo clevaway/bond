@@ -39,7 +39,7 @@ To get started! You're going to fork this repository, try creating a branch, mak
 
 
 ## Contributing
-### Remember please all pull request should be sent to the dev branch*
+### Remember please all pull request should be sent to the main branch*
 Please read [CONTRIBUTING.md](https://github.com/FotieMConstant/bond/blob/main/CONTRIBUTING.md) for details on this project.
 
 ## Code of Conduct
