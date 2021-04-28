@@ -37,7 +37,7 @@ create table bond
    primary key (room_id, person_uid)
 );
 
-alter table bond add constraint fk_association1 foreign key (person_uid)
+alter table bond add constraint fk_association foreign key (person_uid)
       references person (uid) on delete restrict on update restrict;
 
 alter table bond add constraint fk_association1 foreign key (room_id)
