@@ -16,6 +16,7 @@ create table person
    uid                  varchar(254) not null,
    name                 varchar(254),
    username             varchar(254),
+   email                varchar(254),
    photo                varchar(254),
    primary key (uid)
 );
