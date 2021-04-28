@@ -2,6 +2,7 @@
 // Importing express
 const express = require('express');
 const app = express();
+const api = require('./api'); //importing the api
 
 // enabling CORS to accept from all origins
 app.all("*", (req, res, next) => {
@@ -14,6 +15,10 @@ app.all("*", (req, res, next) => {
 app.get("/", (req, res) => {
   res.send("welcome to the bond-api endpoint.");
 });
+
+// calling for implimentation of getting all users
+app.get('/users', api.getAllusers);
+
 
 // setting the port of the process or a default port 
 app.listen(process.env.PORT || 3000, function(){
