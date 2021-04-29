@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const mysql = require('mysql');
 const nodemailer = require('nodemailer');
 const sgTransport = require('nodemailer-sendgrid-transport');
+
 require('dotenv').config();
 
 //utilizes the body-parser package
@@ -31,8 +32,6 @@ const con = mysql.createConnection({
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,
 });
-//start connection to db
-con.connect();
 
 // endpoint to get all users
 const getAllusers = async (request, response) => {
@@ -53,7 +52,8 @@ const sendInvite = async (request, response) => {
 
       if (err) throw err;
       if (request.params.email == undefined) return
-
+      
+      //check if email is already a user
       if(result.length == 0){
         var email = {
           from: 'josephjunejoeee@gmail.com',
@@ -62,7 +62,7 @@ const sendInvite = async (request, response) => {
           text: 'Hello world',
           html: '<h1><b>Bond with {session.name}</b></h1><h3>A friend wants to bond with you, Download and install Bond now to bond with your loved ones.</h3></br></br><h3>Click the link below to bond now.</h3></br><h3>https://bond-nu.vercel.app/</h3>'
         };
-
+        //sending the email
         client.sendMail(email, function(err, info){
           if (err) throw err;
           ret = 1;
@@ -74,8 +74,8 @@ const sendInvite = async (request, response) => {
       }
 
       response.status(200).json(ret);
-      // ret = 0  = not emailed (already exists)
-      // ret = 1  = emailed new user
+      /* ret = 0  = not emailed (already exists)
+         ret = 1  = emailed new user */
       });
   };
 
