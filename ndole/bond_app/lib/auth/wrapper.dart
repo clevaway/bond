@@ -1,6 +1,6 @@
 import 'package:bond_app/auth/google_sign_in.dart';
 import 'package:bond_app/models/user_models.dart';
-import 'package:bond_app/screens/home_screen.dart';
+import 'package:bond_app/screens/tab_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -11,7 +11,7 @@ class Wrapper extends StatelessWidget {
     if (user == null) {
       return GoogleSignInScreen();
     } else {
-      return HomeScreen();
+      return TabView();
     }
   }
 }
