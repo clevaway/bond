@@ -20,7 +20,10 @@ const routes = [
   {
     path: '/auth',
     name: 'Auth',
-    component: Auth
+    component: Auth,
+    meta: {
+      name:'Auth'
+    }
   }, 
   {
     path: '/u/profile',
@@ -51,11 +54,16 @@ const router = new VueRouter({
 // navigation guard
 router.beforeEach((to, from, next) => {
   // route guard. if user is not connected prevent them from going anywhere
-  if (to.meta.auth && !store.state.currentUser) {
+
+  if(to.meta.name === 'Auth' && store.state.currentUser){
+    next({
+      path:"/"
+    });
+  }else if (to.meta.auth && !store.state.currentUser) {
     next({
       path: "/auth",
     });
-  } else {
+  }else{
     next();
   }
 });
