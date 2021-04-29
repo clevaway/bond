@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 ThemeData buildLightTheme() => ThemeData.light().copyWith(
       cardColor: Colors.white,
       backgroundColor: Colors.grey[100],
+      primaryColor: primaryColor,
       accentColor: Colors.grey[800],
       scaffoldBackgroundColor: Colors.white,
+      dividerColor: dividerColor,
       appBarTheme: AppBarTheme(
         centerTitle: true,
         brightness: Brightness.dark,

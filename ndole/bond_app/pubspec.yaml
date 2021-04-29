@@ -28,13 +28,17 @@ dependencies:
   cupertino_icons: ^1.0.2
   firebase_auth: ^1.0.1
   firebase_core: ^1.0.2
+  font_awesome_flutter: ^9.0.0
+  google_fonts: ^2.0.0
   google_sign_in: ^5.0.1
+  http: ^0.13.1
   provider: ^5.0.0
   shared_preferences: ^2.0.5
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  change_app_package_name: ^1.0.0
   pedantic: ^1.0.0
 
 # For information on the generic Dart part of this file, see the
@@ -49,6 +53,7 @@ flutter:
   assets:
     - assets/images/
     - assets/logo/
+    - assets/icons/
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.bond_app">
+    package="com.bond.bond_app">
    <application
         android:label="bond_app"
         android:icon="@mipmap/ic_launcher">

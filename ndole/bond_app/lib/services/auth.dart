@@ -36,6 +36,7 @@ class AuthService {
         User user = result.user;
         return _userFromFirebaseUser(user);
       }).catchError((err) {
+        print('${err.toString()}.................');
         if (err.code == 'user-not-found') {
           Flushbar(
             message: "No user found for that email.",
@@ -49,7 +50,7 @@ class AuthService {
         }
       });
     } catch (error) {
-      print(error.toString());
+      print('${error.toString()}.................');
       return null;
     }
   }
