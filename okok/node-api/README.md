@@ -6,7 +6,7 @@ Navigate to the okok directory and run the following commands to setup the serve
 - node server.js
 
 # Endpoints - api
-## Auth
+## 1- Auth
 - Endpoint ``https://bond-api.vercel.app/user``
 - Method: `POST`
 - Data object (Send in Body*): 
