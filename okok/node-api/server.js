@@ -24,8 +24,13 @@ app.get("/", (req, res) => {
 // calling for implimentation of getting all users
 app.get('/users', api.getAllusers);
 
+
+// sending bond invite
+app.get('/sendInvite/:email', api.sendInvite);
+
 // persist user data in db to create a new user
 app.post('/user', api.createUser);
+
 
 // setting the port of the process or a default port 
 app.listen(process.env.PORT || 3000, function(){
