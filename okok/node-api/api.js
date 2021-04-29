@@ -7,7 +7,7 @@ const sgTransport = require('nodemailer-sendgrid-transport');
 require('dotenv').config();
 
 //utilizes the body-parser package
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: false }));
 
 //need for body parser
 app.use(express.json());
@@ -74,6 +74,8 @@ const sendInvite = async (request, response) => {
       }
 
       response.status(200).json(ret);
+      // ret = 0  = not emailed (already exists)
+      // ret = 1  = emailed new user
       });
   };
 
