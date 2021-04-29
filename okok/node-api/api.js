@@ -32,7 +32,7 @@ const con = mysql.createConnection({
     database: process.env.DB_DATABASE,
 });
 //start connection to db
-// con.connect();
+con.connect();
 
 // endpoint to get all users
 const getAllusers = async (request, response) => {
