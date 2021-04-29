@@ -19,6 +19,8 @@ app.get("/", (req, res) => {
 // calling for implimentation of getting all users
 app.get('/users', api.getAllusers);
 
+// sending bond invite
+app.get('/sendInvite/:email', api.sendInvite);
 
 // setting the port of the process or a default port 
 app.listen(process.env.PORT || 3000, function(){
