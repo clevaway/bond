@@ -1,15 +1,24 @@
+// add your dependencies imports here
 const mysql = require('mysql');
-require('dotenv').config()
+const express = require('express'); // requiring express in case needed in this file
+const app = express();
+const nodemailer = require('nodemailer');
+const sgTransport = require('nodemailer-sendgrid-transport');
+require('dotenv').config() // for the .env 
 
-// connection data
+// do not add any dependency import below this line
+
+// database connection credentials
 const con = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE,
-    port: process.env.DB_PORT,
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+  port: process.env.DB_PORT,
 
 });
+// end of database connection credentials
+
 
 // endpoint to get all users
 const getAllusers = async (request, response) => {
@@ -21,7 +30,7 @@ const getAllusers = async (request, response) => {
     });
 };
 
-// endpoint to get all users
+// endpoint to persist users
 const createUser = async (request, response) => {
     const uid = request.body.uid;
     const name = request.body.name;
@@ -47,8 +56,62 @@ const createUser = async (request, response) => {
             }
         });
 };
+// end of endpoint to persist users
+
+
+
+//send Invite Button
+const sendInvite = async (request, response) => {
+    //utilizes the body-parser package
+    app.use(express.urlencoded({ extended: false }));
+    //need for body parser
+    app.use(express.json());
+    //mailing options
+    const options = {
+      auth: {
+      //  api_user: process.env.SENDGRID_USERNAME,
+        api_key: process.env.SENDGRID_API_KEY
+      }
+    }
+
+    const client = nodemailer.createTransport(sgTransport(options));
+
+    con.query("SELECT * FROM person where email='"+request.params.email+"' ", function (err, result) {
+      var ret = 0;
+
+      if (err) throw err;
+      if (request.params.email == undefined) return
+      
+      //check if email is already a user
+      if(result.length == 0){
+        var email = {
+          from: 'josephjunejoeee@gmail.com',
+          to: request.params.email,
+          subject: 'Bond invite❤️',
+          text: 'Hi there',
+          html: '<h1><b>Bond with '+request.params.email+'</b></h1><h3>A friend wants to bond with you, Download and install Bond now to bond with your loved ones.</h3></br></br><h3>Click the link below to bond now.</h3></br><h3>https://bond-nu.vercel.app/</h3>'
+        };
+        //sending the email
+        client.sendMail(email, function(err, info){
+          if (err) throw err;
+          ret = 1;
+          console.log('Message sent: ' + info.response);  
+        });
+
+      }else{
+        //send invite to already user
+      }
+
+      response.status(200).json(ret);
+      /* ret = 0  = not emailed (already exists)
+        ret = 1  = emailed new user */
+      });
+};
+//end of send Invite Button
+
 
 module.exports = {
     getAllusers,
-    createUser
+    createUser,
+    sendInvite
 };

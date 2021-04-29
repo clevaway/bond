@@ -25,6 +25,9 @@ app.get("/", (req, res) => {
 app.get('/users', api.getAllusers);
 
 
+// sending bond invite
+app.get('/sendInvite/:email', api.sendInvite);
+
 // persist user data in db to create a new user
 app.post('/user', api.createUser);
 
