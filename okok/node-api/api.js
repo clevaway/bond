@@ -1,9 +1,7 @@
 // add your dependencies imports here
 const mysql = require('mysql');
 const express = require('express'); // requiring express in case needed in this file
-const app = express();
 const nodemailer = require('nodemailer');
-const sgTransport = require('nodemailer-sendgrid-transport');
 require('dotenv').config() // for the .env 
 
 // do not add any dependency import below this line
@@ -62,50 +60,31 @@ const createUser = async (request, response) => {
 
 //send Invite Button
 const sendInvite = async (request, response) => {
-    //utilizes the body-parser package
-    app.use(express.urlencoded({ extended: false }));
-    //need for body parser
-    app.use(express.json());
-    //mailing options
-    const options = {
-      auth: {
-      //  api_user: process.env.SENDGRID_USERNAME,
-        api_key: process.env.SENDGRID_API_KEY
-      }
+
+  // create reusable transporter object using the default SMTP transport
+  var transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+        user: process.env.GMAIL_USER,
+        pass: process.env.GMAIL_PASSWORD
     }
+    });
 
-    const client = nodemailer.createTransport(sgTransport(options));
+  // send mail with defined transport object
+  let info = await transporter.sendMail({
+    from: '"Bond" <foo@example.com>', // sender address
+    to: request.params.email, // list of receivers
+    subject: "Bond invite❤️", // Subject line
+    text: 'Hi there',
+    html: '<h1><b>Bond with '+request.params.email+'</b></h1><h3>A friend wants to bond with you, Download and install Bond now to bond with your loved ones.</h3></br></br><h3>Click the link below to bond now.</h3></br><h3>https://bond-nu.vercel.app/bond/</h3>'
+  
+  });
 
-    con.query("SELECT * FROM person where email='"+request.params.email+"' ", function (err, result) {
-      var ret = 0;
+  console.log("Message sent: %s", info.messageId);
+  // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+  response.status(200).json([{status: 'sent', message: 'Bond invite sent successfully to '+request.params.email}]); 
 
-      if (err) throw err;
-      if (request.params.email == undefined) return
-      
-      //check if email is already a user
-      if(result.length == 0){
-        var email = {
-          from: 'josephjunejoeee@gmail.com',
-          to: request.params.email,
-          subject: 'Bond invite❤️',
-          text: 'Hi there',
-          html: '<h1><b>Bond with '+request.params.email+'</b></h1><h3>A friend wants to bond with you, Download and install Bond now to bond with your loved ones.</h3></br></br><h3>Click the link below to bond now.</h3></br><h3>https://bond-nu.vercel.app/</h3>'
-        };
-        //sending the email
-        client.sendMail(email, function(err, info){
-          if (err) throw err;
-          ret = 1;
-          console.log('Message sent: ' + info.response);  
-        });
-
-      }else{
-        //send invite to already user
-      }
-
-      response.status(200).json(ret);
-      /* ret = 0  = not emailed (already exists)
-        ret = 1  = emailed new user */
-      });
+  
 };
 //end of send Invite Button
 
