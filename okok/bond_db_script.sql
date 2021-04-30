@@ -11,14 +11,21 @@
 /*==============================================================*/
 /* Table : person                                               */
 /*==============================================================*/
+
+CREATE DATABASE bond;
+
+\c bond
+
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 create table person
 (
-   uid                  varchar(254) not null,
+   id                   uuid default uuid_generate_v4 (),
    name                 varchar(254),
-   username             varchar(254),
-   email                varchar(254),
+   username             varchar(254) UNIQUE,
+   email                varchar(254) UNIQUE,
    photo                varchar(254),
-   primary key (uid)
+   primary key (id)
 );
 
 /*==============================================================*/
@@ -26,21 +33,18 @@ create table person
 /*==============================================================*/
 create table room
 (
-   id                   varchar(254) not null,
-   roomname             varchar(254),
+   id                   uuid default uuid_generate_v4 (),
+   roomname             varchar(254) UNIQUE,
    primary key (id)
 );
 
 create table bond
 (
-   room_id              varchar(254) not null,
-   person_uid           varchar(254) not null,
-   primary key (room_id, person_uid)
+   room_id              uuid,
+   person_id           uuid,
+   primary key (room_id, person_id),
+   foreign key (room_id)
+      references room (id),
+   foreign key (person_id)
+      references person (id)
 );
-
-alter table bond add constraint fk_association foreign key (person_uid)
-      references person (uid) on delete restrict on update restrict;
-
-alter table bond add constraint fk_association1 foreign key (room_id)
-      references room (id) on delete restrict on update restrict;
-
