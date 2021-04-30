@@ -164,7 +164,7 @@ const sendInvite = async (request, response) => {
                                             <table border='0' cellpadding='0' cellspacing='0' role='presentation' style='border-collapse:separate;line-height:100%;'>
                                               <tr>
                                                 <td align='center' bgcolor='#ff6f6f' role='presentation' style='background-color:#ff6f6f;border:none;border-radius:5px;cursor:auto;padding:10px 25px;' valign='middle'>
-                                                  <a href='http://bond-nu.vercel.app/bond/`+encryptedEmail+`' style='background:#ff6f6f;color:#ffffff;font-family:Oxygen, Helvetica neue, sans-serif;font-size:14px;font-weight:400;line-height:21px;margin:0;text-decoration:none;text-transform:none;' target='_blank'>
+                                                  <a href='http://bond-nu.vercel.app/auth?bondkey=`+encryptedEmail+`' style='background:#ff6f6f;color:#ffffff;font-family:Oxygen, Helvetica neue, sans-serif;font-size:14px;font-weight:400;line-height:21px;margin:0;text-decoration:none;text-transform:none;' target='_blank'>
                                                     Bond now!
                                                   </a>
                                                 </td>

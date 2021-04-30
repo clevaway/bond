@@ -82,7 +82,16 @@ export default {
         this.snackbarNotification.displayTime = 5000;
         console.log("You are logged in as => ");
         console.log(store.state.currentUser);
-        this.$router.push("/"); // redirects user when are logged in
+        // check if it's an invite or a normal login
+        if (this.$route.query.bondkey) {
+          // redirect them to accept view with the bondkey to be used later on there
+          console.log("bondkey => " + this.$route.query.bondkey);
+          this.$router.push("/accept?bondkey=" + this.$route.query.bondkey);
+        } else {
+          // redirect them to home page if it's normal login
+          console.log("Normal auth");
+          this.$router.push("/"); // redirects user when are logged in
+        }
       } catch (error) {
         this.snackbarNotification.status = true;
         this.snackbarNotification.color = "red";
