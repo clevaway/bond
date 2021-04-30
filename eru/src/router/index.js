@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Auth from '../views/Auth.vue'
 import Profile from '../views/Profile.vue'
+import AcceptInvite from '../views/AcceptInvite.vue'
 import userComponents from '../views/userComponents.vue'
 import store from '@/store'
 
@@ -29,6 +30,11 @@ const routes = [
     path: '/u/profile',
     name: 'profile',
     component: Profile
+  },
+  {
+    path: '/accept',
+    name: 'AcceptInvite',
+    component: AcceptInvite,
   },
   {
     path: '/components',
