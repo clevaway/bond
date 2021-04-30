@@ -21,7 +21,7 @@ const con = mysql.createConnection({
 // endpoint to get all users
 const getAllusers = async (request, response) => {
     console.log("Return all bond users")
-  con.query("SELECT * FROM person", function (err, result) {
+  con.query("SELECT * FROM person LIMIT 10", function (err, result) {
      // handling any errors
     if (err) throw err;
        response.status(200).json(result)  
