@@ -20,7 +20,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 create table person
 (
-   id                   uuid default uuid_generate_v4 (),
+   uid                   uuid default uuid_generate_v4 (),
    name                 varchar(254),
    username             varchar(254) UNIQUE,
    email                varchar(254) UNIQUE,
@@ -41,7 +41,7 @@ create table room
 create table bond
 (
    room_id              uuid,
-   person_id           uuid,
+   person_uid           uuid,
    primary key (room_id, person_id),
    foreign key (room_id)
       references room (id),
