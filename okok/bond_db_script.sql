@@ -26,21 +26,21 @@ create table person
 /*==============================================================*/
 create table room
 (
-   id                   varchar(254) not null,
+   uid                   varchar(254) not null,
    roomname             varchar(254),
    primary key (id)
 );
 
 create table bond
 (
-   room_id              varchar(254) not null,
+   room_uid             varchar(254) not null,
    person_uid           varchar(254) not null,
-   primary key (room_id, person_uid)
+   primary key (room_uid, person_uid)
 );
 
 alter table bond add constraint fk_association foreign key (person_uid)
       references person (uid) on delete restrict on update restrict;
 
-alter table bond add constraint fk_association1 foreign key (room_id)
+alter table bond add constraint fk_association1 foreign key (room_uid)
       references room (id) on delete restrict on update restrict;
 

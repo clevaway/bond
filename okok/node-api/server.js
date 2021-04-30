@@ -1,8 +1,8 @@
 "use strict";
 // Importing express
-const express = require('express');
+const express = require("express");
 const app = express();
-const api = require('./api'); //importing the api
+const api = require("./api"); //importing the api
 
 // express.json() and express.urlencoded() are built-in middleware functions to support JSON-encoded and URL-encoded bodies.
 // to be able to get object data from the url
@@ -22,17 +22,15 @@ app.get("/", (req, res) => {
 });
 
 // calling for implimentation of getting all users
-app.get('/users', api.getAllusers);
-
+app.get("/users", api.getAllusers);
 
 // sending bond invite
-app.get('/sendInvite/:email', api.sendInvite);
+app.get("/sendInvite/:email", api.sendInvite);
 
 // persist user data in db to create a new user
-app.post('/user', api.createUser);
+app.post("/user", api.createUser);
 
-
-// setting the port of the process or a default port 
-app.listen(process.env.PORT || 3000, function(){
-    console.log('listening on port: 3000');
+// setting the port of the process or a default port
+app.listen(process.env.PORT || 3000, function () {
+  console.log("listening on port: 3000");
 });
