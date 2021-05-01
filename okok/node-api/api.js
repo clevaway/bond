@@ -258,6 +258,8 @@ const sendInvite = async (request, response) => {
 
   }else{
     //if reciever is already a user
+    response.status(200).json("This is not an error: if receiver is already a user module")
+
   }
   
 })
