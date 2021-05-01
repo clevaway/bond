@@ -11,6 +11,6 @@ const Color boxColor = Color.fromRGBO(235, 237, 242, 1);
 
 Color primaryColor = hexToColor('#fd4d4d');
 
-Color textLight = hexToColor("#ffffff");
-Color textDark = hexToColor("#0e0e0f");
+Color textLight = hexToColor('#ffffff');
+Color textDark = hexToColor('#0e0e0f');
 Color dividerColor = hexToColor('#FFF0F0');
