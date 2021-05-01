@@ -13,14 +13,14 @@
 <script>
 // import HelloWorld from './components/HelloWorld';
 import Appbar from './components/userComponents/Appbar.vue';
-import Footer from './components/Footer';
+import Footer from './components/Footer.vue';
 import store from './store';
 
 export default {
   name: 'App',
   components: {
     Appbar,
-    // Footer,
+    Footer,
   },
 
   data() {
