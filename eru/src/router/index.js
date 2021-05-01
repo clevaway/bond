@@ -1,13 +1,13 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
-import Auth from '../views/Auth.vue'
-import Profile from '../views/Profile.vue'
-import AcceptInvite from '../views/AcceptInvite.vue'
-import userComponents from '../views/userComponents.vue'
-import store from '@/store'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import Home from '../views/Home.vue';
+import Auth from '../views/Auth.vue';
+import Profile from '../views/Profile.vue';
+import AcceptInvite from '../views/AcceptInvite.vue';
+import userComponents from '../views/userComponents.vue';
+import store from '@/store';
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
@@ -16,20 +16,20 @@ const routes = [
     component: Home,
     meta: {
       auth: true,
-    }
+    },
   },
   {
     path: '/auth',
     name: 'Auth',
     component: Auth,
     meta: {
-      name:'Auth'
-    }
-  }, 
+      name: 'Auth',
+    },
+  },
   {
     path: '/u/profile',
     name: 'profile',
-    component: Profile
+    component: Profile,
   },
   {
     path: '/accept',
@@ -39,7 +39,7 @@ const routes = [
   {
     path: '/components',
     name: 'userComponents',
-    component: userComponents
+    component: userComponents,
   },
   {
     path: '/about',
@@ -47,30 +47,30 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
-]
+    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+  },
+];
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes
-})
+  routes,
+});
 
 // navigation guard
 router.beforeEach((to, from, next) => {
   // route guard. if user is not connected prevent them from going anywhere
 
-  if(to.meta.name === 'Auth' && store.state.currentUser){
+  if (to.meta.name === 'Auth' && store.state.currentUser) {
     next({
-      path:"/"
+      path: '/',
     });
-  }else if (to.meta.auth && !store.state.currentUser) {
+  } else if (to.meta.auth && !store.state.currentUser) {
     next({
-      path: "/auth",
+      path: '/auth',
     });
-  }else{
+  } else {
     next();
   }
 });
-export default router
+export default router;

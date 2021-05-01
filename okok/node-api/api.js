@@ -2,7 +2,7 @@
 const mysql = require('mysql');
 const express = require('express'); // requiring express in case needed in this file
 const nodemailer = require('nodemailer');
-require('dotenv').config() // for the .env 
+require('dotenv').config(); // for the .env
 const Cryptr = require('cryptr');
 
 // do not add any dependency import below this line
@@ -14,57 +14,67 @@ const con = mysql.createConnection({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
   port: process.env.DB_PORT,
-
 });
 // end of database connection credentials
 
-
 // endpoint to get all users
 const getAllusers = async (request, response) => {
-    console.log("Return all bond users")
-  con.query("SELECT * FROM person", function (err, result) {
-     // handling any errors
+  console.log('Return all bond users');
+  con.query('SELECT * FROM person', function (err, result) {
+    // handling any errors
     if (err) throw err;
-       response.status(200).json(result)  
-    });
+    response.status(200).json(result);
+  });
 };
 
 // endpoint to persist users
 const createUser = async (request, response) => {
-    const uid = request.body.uid;
-    const name = request.body.name;
-    const username =  request.body.username;
-    const photo = request.body.photo;
-    const email = request.body.email;
+  const uid = request.body.uid;
+  const name = request.body.name;
+  const username = request.body.username;
+  const photo = request.body.photo;
+  const email = request.body.email;
 
-    // pick the user from the database
-    con.query("SELECT * FROM person WHERE uid="+ mysql.escape(uid), function (err, result) {
-        // handling any errors
-        if (err) throw err;
-            // if query returned data then just login user
-            if(result[0]){
-                console.log("Normal user login => ");
-                response.status(200).json([{status: 'login', message: request.body.name+' Logged in successfully!'}]); 
-            }else{
-                // if user not in db persist data in the db
-                console.log("Persist user => ");
-                con.query("INSERT INTO person (uid, name, username, email, photo) VALUES ('"+uid+"','"+name+"','"+username+"','"+email+"','"+photo+"')", function (err, result) {
-                    response.status(200).json([{status: 'signup', message: request.body.name+' account created successfully!'}]); 
- 
-                });
-            }
-        });
+  // pick the user from the database
+  con.query('SELECT * FROM person WHERE uid=' + mysql.escape(uid), function (err, result) {
+    // handling any errors
+    if (err) throw err;
+    // if query returned data then just login user
+    if (result[0]) {
+      console.log('Normal user login => ');
+      response.status(200).json([{ status: 'login', message: request.body.name + ' Logged in successfully!' }]);
+    } else {
+      // if user not in db persist data in the db
+      console.log('Persist user => ');
+      con.query(
+        "INSERT INTO person (uid, name, username, email, photo) VALUES ('" +
+          uid +
+          "','" +
+          name +
+          "','" +
+          username +
+          "','" +
+          email +
+          "','" +
+          photo +
+          "')",
+        function (err, result) {
+          response
+            .status(200)
+            .json([{ status: 'signup', message: request.body.name + ' account created successfully!' }]);
+        }
+      );
+    }
+  });
 };
 // end of endpoint to persist users
 
-
-
 //send Invite Button
 const sendInvite = async (request, response) => {
-
   // function that holds the formatted html invite
-  formattedHTMLInvite = (email, encriptedEmail) =>{
-    let templete = `
+  formattedHTMLInvite = (email, encriptedEmail) => {
+    let templete =
+      `
     <!doctype html>
     <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
       <head>
@@ -137,7 +147,9 @@ const sendInvite = async (request, response) => {
                                           <td align='center' style='font-size:0px;padding:10px 25px;word-break:break-word;'>
                                             <div style='color:#777777;font-family:Oxygen, Helvetica neue, sans-serif;font-size:14px;line-height:21px;text-align:center;'>
                                               <span>
-                                                Bond with `+email+`. Your partner wants to bond with you. Click the button below to bond now.
+                                                Bond with ` +
+      email +
+      `. Your partner wants to bond with you. Click the button below to bond now.
                                                 <br />
                                                 <br />
                                               </span>
@@ -164,7 +176,9 @@ const sendInvite = async (request, response) => {
                                             <table border='0' cellpadding='0' cellspacing='0' role='presentation' style='border-collapse:separate;line-height:100%;'>
                                               <tr>
                                                 <td align='center' bgcolor='#ff6f6f' role='presentation' style='background-color:#ff6f6f;border:none;border-radius:5px;cursor:auto;padding:10px 25px;' valign='middle'>
-                                                  <a href='http://bond-nu.vercel.app/auth?bondkey=`+encryptedEmail+`' style='background:#ff6f6f;color:#ffffff;font-family:Oxygen, Helvetica neue, sans-serif;font-size:14px;font-weight:400;line-height:21px;margin:0;text-decoration:none;text-transform:none;' target='_blank'>
+                                                  <a href='http://bond-nu.vercel.app/auth?bondkey=` +
+      encryptedEmail +
+      `' style='background:#ff6f6f;color:#ffffff;font-family:Oxygen, Helvetica neue, sans-serif;font-size:14px;font-weight:400;line-height:21px;margin:0;text-decoration:none;text-transform:none;' target='_blank'>
                                                     Bond now!
                                                   </a>
                                                 </td>
@@ -193,11 +207,10 @@ const sendInvite = async (request, response) => {
         </div>
       </body>
     </html>
-    `
-    return templete
-  }
+    `;
+    return templete;
+  };
   // end of function that holds the formatted html invite
-
 
   // encripting the sender's email to use in the invite
   const cryptr = new Cryptr('bondkey');
@@ -207,34 +220,30 @@ const sendInvite = async (request, response) => {
   var transporter = nodemailer.createTransport({
     service: 'Gmail',
     auth: {
-        user: process.env.GMAIL_USER,
-        pass: process.env.GMAIL_PASSWORD
-    }
-    });
+      user: process.env.GMAIL_USER,
+      pass: process.env.GMAIL_PASSWORD,
+    },
+  });
 
   // send mail with defined transport object
   let info = await transporter.sendMail({
     from: '"Bond" <foo@example.com>', // sender address
     to: request.params.email, // list of receivers
-    subject: "Bond invite❤️", // Subject line
+    subject: 'Bond invite❤️', // Subject line
     text: 'Hi there',
-    html: formattedHTMLInvite(request.params.email, encryptedEmail)
-  
+    html: formattedHTMLInvite(request.params.email, encryptedEmail),
   });
   // decripting to make sure everything is okay!
   const decryptedEmail = cryptr.decrypt(encryptedEmail);
-  console.log("decrypted email =>"+decryptedEmail)
-  console.log("Message sent: %s", info.messageId);
+  console.log('decrypted email =>' + decryptedEmail);
+  console.log('Message sent: %s', info.messageId);
   // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-  response.status(200).json([{status: 'sent', message: 'Bond invite sent successfully to '+request.params.email}]); 
-
-  
+  response.status(200).json([{ status: 'sent', message: 'Bond invite sent successfully to ' + request.params.email }]);
 };
 //end of send Invite Button
 
-
 module.exports = {
-    getAllusers,
-    createUser,
-    sendInvite
+  getAllusers,
+  createUser,
+  sendInvite,
 };
