@@ -129,4 +129,4 @@ const template = (email, encryptedEmail) => `
 </html>
 `;
 
-export default template;
+module.exports = template;
