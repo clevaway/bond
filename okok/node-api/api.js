@@ -85,6 +85,7 @@ const sendInvite = async (request, response) => {
             returnVal.message = "sender email is invalid"
             response.status(500).json(returnVal);
         }
+        
       // function that holds the formatted html invite
       formattedHTMLInvite = (email, encriptedEmail) =>{
         
@@ -226,7 +227,7 @@ const sendInvite = async (request, response) => {
 
       // encripting the sender's email to use in the invite
       const cryptr = new Cryptr('bondkey');
-      const encryptedEmail = cryptr.encrypt(receiver);
+      const senderEncryptedEmail = cryptr.encrypt(sender);
 
       // create reusable transporter object using the default SMTP transport
       var transporter = nodemailer.createTransport({
@@ -243,12 +244,12 @@ const sendInvite = async (request, response) => {
         to: receiver, // list of receivers
         subject: "Bond invite❤️", // Subject line
         text: 'Hi there',
-        html: formattedHTMLInvite(receiver, encryptedEmail)
+        html: formattedHTMLInvite(receiver, senderEncryptedEmail)
       
       });
       // decripting to make sure everything is okay!
-      const decryptedEmail = cryptr.decrypt(encryptedEmail);
-      console.log("decrypted email =>"+decryptedEmail)
+      const senderDecryptedEmail = cryptr.decrypt(senderEncryptedEmail);
+      console.log("decrypted email =>"+senderDecryptedEmail)
       console.log("Message sent: %s", info.messageId);
       // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
       response.status(200).json({status: 'sent', message: 'Bond invite sent successfully to '+receiver}); 
