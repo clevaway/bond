@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ThemeProvider with ChangeNotifier {
-  final String key = "appTheme";
+  final String key = 'appTheme';
   SharedPreferences _pref;
   bool _mTheme;
 
