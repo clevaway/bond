@@ -12,9 +12,9 @@ class _HomeScreenState extends State<HomeScreen> {
   final _formKey = GlobalKey<FormState>();
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  TextEditingController _email = TextEditingController();
+  final TextEditingController _email = TextEditingController();
 
-  _showDialog() {
+  showAddPartnerDialog() {
     showDialog(
       context: context,
       builder: (_) {

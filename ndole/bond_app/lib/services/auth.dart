@@ -38,15 +38,17 @@ class AuthService {
       }).catchError((err) {
         print('${err.toString()}.................');
         if (err.code == 'user-not-found') {
-          Flushbar(
-            message: "No user found for that email.",
+          final flushBar = Flushbar(
+            message: 'No user found for that email.',
             duration: Duration(seconds: 7),
-          )..show(context);
+          );
+          flushBar.show(context);
         } else {
-          Flushbar(
-            message: "Internal Error: Something went wrong.",
+          final flushBar = Flushbar(
+            message: 'Internal Error: Something went wrong.',
             duration: Duration(seconds: 7),
-          )..show(context);
+          );
+          flushBar.show(context);
         }
       });
     } catch (error) {
