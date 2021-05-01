@@ -1,11 +1,11 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import store from '../store';
 import Home from '../views/Home.vue';
 import Auth from '../views/Auth.vue';
 import Profile from '../views/Profile.vue';
 import AcceptInvite from '../views/AcceptInvite.vue';
 import userComponents from '../views/userComponents.vue';
-import store from '@/store';
 
 Vue.use(VueRouter);
 

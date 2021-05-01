@@ -1,6 +1,6 @@
-import store from '@/store';
-import firebaseApp from '@/firebaseConfig';
 import firebase from 'firebase';
+import firebaseApp from '../firebaseConfig';
+import store from '../store';
 
 // utils
 const db = firebaseApp.database();
