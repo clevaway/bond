@@ -61,9 +61,11 @@ const createUser = async (request, response) => {
 
 //send Invite Button
 const sendInvite = async (request, response) => {
+  con.query("SELECT name FROM person WHERE email='"+request.params.email+"' LIMIT 1", async (err,result) => {
 
   // function that holds the formatted html invite
   formattedHTMLInvite = (email, encriptedEmail) =>{
+    
     let templete = `
     <!doctype html>
     <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
@@ -137,7 +139,7 @@ const sendInvite = async (request, response) => {
                                           <td align='center' style='font-size:0px;padding:10px 25px;word-break:break-word;'>
                                             <div style='color:#777777;font-family:Oxygen, Helvetica neue, sans-serif;font-size:14px;line-height:21px;text-align:center;'>
                                               <span>
-                                                Bond with `+email+`. Your partner wants to bond with you. Click the button below to bond now.
+                                                Bond with `+result[0].name+`. Your partner wants to bond with you. Click the button below to bond now.
                                                 <br />
                                                 <br />
                                               </span>
@@ -194,6 +196,7 @@ const sendInvite = async (request, response) => {
       </body>
     </html>
     `
+  
     return templete
   }
   // end of function that holds the formatted html invite
@@ -227,7 +230,7 @@ const sendInvite = async (request, response) => {
   console.log("Message sent: %s", info.messageId);
   // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
   response.status(200).json([{status: 'sent', message: 'Bond invite sent successfully to '+request.params.email}]); 
-
+})
   
 };
 //end of send Invite Button
