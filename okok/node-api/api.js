@@ -73,11 +73,17 @@ const sendInvite = async (request, response) => {
   //guard clause incase of null parameters
   if(sender == undefined || receiver == undefined) response.status(500).json(returnVal);
 
-  con.query("SELECT uid FROM person WHERE email='"+receiver+"' LIMIT 1", async (err,receiverRes) => {
+  //search database if receiver is already a user
+  /*
+    con.query("SELECT uid FROM person WHERE email='"+receiver+"' LIMIT 1", async (err,receiverRes) => {
+  */
      
-    /* // check if receiver is not already a user
-      if(receiverRes.length == 0){ */
+    /* 
+    // check if receiver is not already a user
+      if(receiverRes.length == 0){ 
+        */
 
+      //search database if sender is already a user and get his info
       con.query("SELECT name,email FROM person WHERE email='"+sender+"' LIMIT 1", async (err,senderRes) => {  
         //check if somehow sender email is invalid
         if(senderRes.length == 0) {  
@@ -256,13 +262,16 @@ const sendInvite = async (request, response) => {
 
     })
 
-  /*  }else{
+  /*  
+    }else{
       //if reciever is already a user
       response.status(200).json("This is not an error: if receiver is already a user module")
-
-  }*/
+    }
+  */
   
-})
+/*
+  })
+*/
 
 }
 
