@@ -1,7 +1,6 @@
-// add your dependencies imports here
 const mysql = require('mysql');
 const nodemailer = require('nodemailer');
-require('dotenv').config(); // for the .env
+require('dotenv').config();
 const Cryptr = require('cryptr');
 const formattedHTMLInvite = require('./email/invite');
 
@@ -85,7 +84,6 @@ const sendInvite = async (request, response) => {
       const cryptr = new Cryptr('bondkey');
       const senderEncryptedEmail = cryptr.encrypt(sender);
 
-      // create reusable transporter object using the default SMTP transport
       const transporter = nodemailer.createTransport({
         service: 'Gmail',
         auth: {
@@ -94,13 +92,12 @@ const sendInvite = async (request, response) => {
         },
       });
 
-      // send mail with defined transport object
       const info = await transporter.sendMail({
-        from: '"Bond" <foo@example.com>', // sender address
-        to: receiver, // list of receivers
-        subject: 'Bond invite❤️', // Subject line
+        from: '"Bond" <foo@example.com>',
+        to: receiver,
+        subject: `Bond request from ${senderRes[0].name}`,
         text: 'Hi there',
-        html: formattedHTMLInvite(receiver, senderEncryptedEmail),
+        html: formattedHTMLInvite(senderRes[0], senderEncryptedEmail),
       });
 
       // decripting to make sure everything is okay!

@@ -8,6 +8,13 @@ const template = (sender, senderEncryptedEmail) => `
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <style type="text/css">
+      .circular-img img
+        {
+          height: 70px;
+          border: 3px solid #FD4D4D;
+          border-radius: 100px;
+        }
+
         #outlook a{padding: 0;}
               .ReadMsgBody{width: 100%;}
               .ExternalClass{width: 100%;}
@@ -59,8 +66,8 @@ const template = (sender, senderEncryptedEmail) => `
                       <tr>
                         <td style='direction:ltr;font-size:0px;padding:20px;text-align:center;vertical-align:top;'>
                           <!--[if mso | IE]>
-  <table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td style="vertical-align:top;width:540px;">
-  <![endif]-->
+                        <table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td style="vertical-align:top;width:540px;">
+                        <![endif]-->
                           <div class='dys-column-per-90 outlook-group-fix' style='direction:ltr;display:inline-block;font-size:13px;text-align:left;vertical-align:top;width:100%;'>
                             <table border='0' cellpadding='0' cellspacing='0' role='presentation' width='100%'>
                               <tbody>
@@ -70,8 +77,16 @@ const template = (sender, senderEncryptedEmail) => `
                                       <tr>
                                         <td align='center' style='font-size:0px;padding:10px 25px;word-break:break-word;'>
                                           <div style='color:#777777;font-family:Oxygen, Helvetica neue, sans-serif;font-size:14px;line-height:21px;text-align:center;'>
-                                            <span>
-                                              Bond with <b>${sender[0].name}</b> (${sender[0].email}). Your partner wants to bond with you. Click the button below to bond now.
+                                            <center>
+                                              <span class="circular-img">
+                                                <img src="${sender.photo}"/>
+                                                </span><br/>
+                                              <span>${sender.name}</span><br/>
+                                              <span>${sender.email}</span>
+                                            </center>
+                                            <br/>
+                                          <span>
+                                            Hey, <b>${sender.name}</b> would like to bond with you. Please click the button below to bond now.
                                               <br />
                                               <br />
                                             </span>
@@ -97,11 +112,11 @@ const template = (sender, senderEncryptedEmail) => `
                                         <td align='center' style='font-size:0px;padding:10px 25px;word-break:break-word;' vertical-align='middle'>
                                           <table border='0' cellpadding='0' cellspacing='0' role='presentation' style='border-collapse:separate;line-height:100%;'>
                                             <tr>
-                                              <td align='center' bgcolor='#ff6f6f' role='presentation' style='background-color:#ff6f6f;border:none;border-radius:5px;cursor:auto;padding:10px 25px;' valign='middle'>
-                                                <a href='http://bond-nu.vercel.app/accept?bondkey=${senderEncryptedEmail}' style='background:#ff6f6f;color:#ffffff;font-family:Oxygen, Helvetica neue, sans-serif;font-size:14px;font-weight:400;line-height:21px;margin:0;text-decoration:none;text-transform:none;' target='_blank'>
+                                                <td align='center' bgcolor='#ff6f6f' role='presentation' style='background-color:#ff6f6f;border:none;border-radius:5px;cursor:auto;padding:10px 25px;' valign='middle'>
+                                                  <a href='http://bond-nu.vercel.app/accept?bondkey=${senderEncryptedEmail}' style='background:#ff6f6f;color:#ffffff;font-family:Oxygen, Helvetica neue, sans-serif;font-size:14px;font-weight:400;line-height:21px;margin:0;text-decoration:none;text-transform:none;' target='_blank'>
                                                   Bond now!
-                                                </a>
-                                              </td>
+                                                  </a>
+                                                </td>
                                             </tr>
                                           </table>
                                         </td>
@@ -113,8 +128,8 @@ const template = (sender, senderEncryptedEmail) => `
                             </table>
                           </div>
                           <!--[if mso | IE]>
-  </td></tr></table>
-  <![endif]-->
+                        </td></tr></table>
+                        <![endif]-->
                         </td>
                       </tr>
                     </tbody>
