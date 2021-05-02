@@ -313,7 +313,7 @@ const getOneUser = async (request, response) => {
     status: 1
   };
 
-  con.query("SELECT * FROM person WHERE uid="+request.params.uid, function (err, result) {
+  con.query("SELECT * FROM person WHERE uid='"+request.params.uid+"'", function (err, result) {
     //if invalid uid
     if(result== undefined || result.length == 0) {
       response.status(404).json(returnErr)
