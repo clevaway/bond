@@ -12,13 +12,25 @@ const con = mysql.createConnection({
   port: process.env.DB_PORT,
 });
 
-const getAllusers = async (_request, response) => {
+// endpoint to get all users
+const getAllusers = async (request, response) => {
   console.log('Return all bond users');
   con.query('SELECT * FROM person', (err, result) => {
     // handling any errors
     if (err) throw err;
 
-    response.status(200).json(result);
+    // mapping through to hide the email and uid of user for security
+    const updated = result.map((user) => {
+      const { uid, email } = user;
+
+      return {
+        ...user,
+        uid: uid.replace(/^(.{2})[^@]+/, '$1****'),
+        email: email.replace(/^(.{2})[^@]+/, '$1****'),
+      };
+    });
+
+    response.status(200).json(updated);
   });
 };
 
@@ -60,7 +72,7 @@ const sendInvite = async (request, response) => {
     status: 1,
   };
 
-  if (sender === undefined || receiver === undefined) {
+  if (sender === undefined || receiver === undefined || sender.length === 0 || receiver.length === 0) {
     response.status(500).json(returnVal);
     return;
   }

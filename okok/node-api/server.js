@@ -1,8 +1,10 @@
 const express = require('express');
 
 const app = express();
-const api = require('./api'); // importing the api
-
+const cors = require('cors');
+const api = require('./api');
+// enabling CORS to accept from all origins
+app.use(cors());
 // express.json() and express.urlencoded() are built-in middleware functions to support JSON-encoded and URL-encoded bodies.
 // to be able to get object data from the url
 app.use(express.json());

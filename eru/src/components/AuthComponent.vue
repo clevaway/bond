@@ -47,6 +47,11 @@
         </template>
       </v-snackbar>
       <!-- / notification snackbar -->
+      <!-- overlay loader-->
+      <v-overlay :value="overlay">
+        <v-progress-circular indeterminate size="64"></v-progress-circular>
+      </v-overlay>
+      <!-- overlay loader-->
     </v-card>
   </span>
 </template>
@@ -60,6 +65,7 @@ export default {
   components: { ButtonGoogle },
   data() {
     return {
+      overlay: false,
       snackbarNotification: {
         snackMessage: "No data",
         status: false,
@@ -71,28 +77,16 @@ export default {
   methods: {
     // Google signin method
     async googleSignIn() {
+      this.overlay = true; //show loader when loading google auth
       try {
         const provider = new firebase.auth.GoogleAuthProvider();
         await firebase.auth().signInWithPopup(provider);
         store.commit("setCurrentUser", firebase.auth().currentUser); // Update the state in the store
         // alert("You are now signed-in");
-        this.snackbarNotification.status = true;
-        this.snackbarNotification.color = "green";
-        this.snackbarNotification.snackMessage = "You are now signed-in";
-        this.snackbarNotification.displayTime = 5000;
-        console.log("You are logged in as => ");
         console.log(store.state.currentUser);
-        // check if it's an invite or a normal login
-        if (this.$route.query.bondkey) {
-          // redirect them to accept view with the bondkey to be used later on there
-          console.log("bondkey => " + this.$route.query.bondkey);
-          this.$router.push("/accept?bondkey=" + this.$route.query.bondkey);
-        } else {
-          // redirect them to home page if it's normal login
-          console.log("Normal auth");
-          this.$router.push("/"); // redirects user when are logged in
-        }
+        this.authSendToBackEnd();
       } catch (error) {
+        this.overlay = false; //hide loader when loading google auth
         this.snackbarNotification.status = true;
         this.snackbarNotification.color = "red";
         this.snackbarNotification.snackMessage = error;
@@ -100,6 +94,69 @@ export default {
       }
     },
     // End of google SignIn
+    // function that sends data to backend on login
+    async authSendToBackEnd() {
+      const userObject = {
+        uid: store.state.currentUser.uid,
+        name: store.state.currentUser.displayName,
+        username: null,
+        photo: store.state.currentUser.photoURL,
+        email: store.state.currentUser.email,
+      };
+      console.log(userObject);
+      try {
+        // login or signup user
+        let response = await this.axios.post(
+          `https://bond-api.vercel.app/user`,
+          userObject
+        );
+        response = response.data[0];
+        console.log("Return data => ");
+        console.log(response);
+        if (response.status == "login") {
+          console.log(response.message);
+          this.snackbarNotification.status = true;
+          this.snackbarNotification.color = "primary";
+          this.snackbarNotification.snackMessage = response.message;
+          this.snackbarNotification.displayTime = 5000;
+          this.checkAuthReason();
+        } else if (response.status == "signup") {
+          console.log(response.message);
+          this.snackbarNotification.status = true;
+          this.snackbarNotification.color = "primary";
+          this.snackbarNotification.snackMessage = response.message;
+          this.snackbarNotification.displayTime = 5000;
+          this.checkAuthReason();
+        } else {
+          console.log(response.message);
+          this.snackbarNotification.status = true;
+          this.snackbarNotification.color = "primary";
+          this.snackbarNotification.snackMessage =
+            "You should never see this error! Just in case";
+          this.snackbarNotification.displayTime = 5000;
+        }
+      } catch (error) {
+        // if an error occures
+        console.error("There was an error =>" + error);
+        this.snackbarNotification.status = true;
+        this.snackbarNotification.color = "red";
+        this.snackbarNotification.snackMessage = "Error:" + error.message;
+        this.snackbarNotification.displayTime = 6000;
+      }
+    },
+    //this function checks why they are on the auth route
+    checkAuthReason() {
+      // check if it's an invite or a normal login
+      if (this.$route.query.bondkey) {
+        // redirect them to accept view with the bondkey to be used later on there
+        console.log("bondkey => " + this.$route.query.bondkey);
+        this.$router.push("/accept?bondkey=" + this.$route.query.bondkey);
+      } else {
+        // redirect them to home page if it's normal login
+        console.log("Normal auth");
+        this.$router.push("/"); // redirects user when are logged in
+      }
+    },
   },
 
   computed: {},
