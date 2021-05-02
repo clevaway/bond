@@ -277,7 +277,14 @@ const sendInvite = async (request, response) => {
 
 // endpoint to edit user info
 const editUser = async (request, response) => {
+  //initialize return type of error
+  var returnErr = {
+    message: "Invalid UID",
+    status: 1
+  };
+
   var person = {
+        uid: request.params.uid,
         name : "",
         username : "",
         photo: ""
@@ -289,27 +296,32 @@ const editUser = async (request, response) => {
 
   con.query("UPDATE person SET name='"+person.name+"',username='"+person.username+"',photo='"+person.photo+"' WHERE uid='"+request.body.uid+"'", function (err, result) {
     // handling any errors
-   if (err) throw err;
-      response.status(200).json(result)  
+   if(result == undefined || result.length == 0){
+    response.status(200).json(returnErr)
+    return 
+   }
+   //if success
+    response.status(200).json(person)  
    });
 };
 
 
 const getOneUser = async (request, response) => {
-  con.query("SELECT * FROM person WHERE uid='"+request.params.uid+"'", function (err, result) {
-    // handling any errors
-    var returnVal = {
-      message: "Invalid UID",
-      status: 1
-    }
+  //initialize return type of error
+  var returnErr = {
+    message: "Invalid UID",
+    status: 1
+  };
+
+  con.query("SELECT * FROM person WHERE uid="+request.params.uid, function (err, result) {
     //if invalid uid
-    if(result= undefined || result.length == 0) {
-      response.status(404).json(returnVal)
+    if(result== undefined || result.length == 0) {
+      response.status(404).json(returnErr)
       return
     }
 
     //if success
-    response.status(200).json(result)  
+    response.status(200).json(result);  
    });
 };
 
