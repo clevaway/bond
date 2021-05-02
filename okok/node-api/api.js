@@ -27,8 +27,8 @@ const getAllusers = async (request, response) => {
     if (err) throw err;
     // mapping through to hide the email and uid of user for security
     result.map((user) => {
-      user.uid = user.uid.replace(/^(.{2})[^@]+/, "$1****");
-      user.email = user.email.replace(/^(.{2})[^@]+/, "$1****");
+      user.uid = user.uid.toString().replace(/^(.{2})[^@]+/, "$1****");
+      user.email = user.email.toString().replace(/^(.{2})[^@]+/, "$1****");
     })
        response.status(200).json(result)  
     });
@@ -289,7 +289,7 @@ const editUser = async (request, response) => {
   };
 
   var person = {
-        uid: request.params.uid,
+        uid: request.body.uid,
         name : "",
         username : "",
         photo: ""
@@ -324,7 +324,11 @@ const getOneUser = async (request, response) => {
       response.status(404).json(returnErr)
       return
     }
-
+    result.map((user) => {
+      user.uid = user.uid.toString().replace(/^(.{2})[^@]+/, "$1****");
+      user.email = user.email.toString().replace(/^(.{2})[^@]+/, "$1****");
+    })
+    
     //if success
     response.status(200).json(result);  
    });
