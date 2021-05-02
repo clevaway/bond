@@ -226,13 +226,11 @@ const sendInvite = async (request, response) => {
   
 
 
-  //guard clause incase of null parameters
-  if(sender == undefined || receiver == undefined) response.status(500).json(returnVal);
-
-  con.query("SELECT uid FROM person WHERE email='"+receiver+"' LIMIT 1", async (err,receiverRes) => {
-     
-    // check if receiver is not already a user
-    if(receiverRes.length == 0){
+  //incase of null and empty parameters
+  if(sender == undefined || receiver == undefined || sender.length == 0 || receiver.length == 0) {
+    response.status(500).json(returnVal);
+    return
+  }
 
       con.query("SELECT * FROM person WHERE email='"+sender+"' LIMIT 1", async (err,senderRes) => {  
         //check if somehow sender email is invalid
@@ -240,8 +238,8 @@ const sendInvite = async (request, response) => {
             returnVal.status = 2;
             returnVal.message = "sender email is invalid"
             response.status(500).json(returnVal);
+            return
         }
-
 
       // encripting the sender's email to use in the invite
       const cryptr = new Cryptr('bondkey');
@@ -273,15 +271,6 @@ const sendInvite = async (request, response) => {
       response.status(200).json({status: 'sent', message: 'Bond invite sent successfully to '+receiver}); 
 
     })
-
-  }else{
-    //if reciever is already a user
-    response.status(200).json("This is not an error: if receiver is already a user module")
-
-  }
-  
-})
-
 }
 
 //end of send Invite Button
