@@ -21,10 +21,15 @@ const con = mysql.createConnection({
 
 // endpoint to get all users
 const getAllusers = async (request, response) => {
-    console.log("Return all bond users")
+    console.log("Return all bond users");
   con.query("SELECT * FROM person", function (err, result) {
      // handling any errors
     if (err) throw err;
+    // mapping through to hide the email and uid of user for security
+    result.map((user) => {
+      user.uid = user.uid.replace(/^(.{2})[^@]+/, "$1****");
+      user.email = user.email.replace(/^(.{2})[^@]+/, "$1****");
+    })
        response.status(200).json(result)  
     });
 };
