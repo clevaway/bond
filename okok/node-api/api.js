@@ -232,10 +232,9 @@ const sendInvite = async (request, response) => {
     return
   }
 
-      //search database if sender is already a user and get his info
-      con.query("SELECT name,email,photo FROM person WHERE email='"+sender+"' LIMIT 1", async (err,senderRes) => {  
+      con.query("SELECT * FROM person WHERE email='"+sender+"' LIMIT 1", async (err,senderRes) => {  
         //check if somehow sender email is invalid
-        if(senderRes == undefined || senderRes.length == 0 ) {  
+        if(senderRes.length == 0) {  
             returnVal.status = 2;
             returnVal.message = "sender email is invalid"
             response.status(500).json(returnVal);
