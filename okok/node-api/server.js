@@ -14,6 +14,8 @@ app.use(express.urlencoded({ extended: true }));
 // enabling CORS to accept from all origins
 app.all("*", (req, res, next) => {
   console.log(`${new Date()} - request for ${req.path}`);
+  res.set("Access-Control-Allow-Origin", "*");
+  next();
 });
 
 // the various endpoints
