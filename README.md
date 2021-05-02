@@ -50,6 +50,7 @@ Contributors helping to review/merge pull requests:
 
 * [@dilanlongla](https://github.com/dilanlongla) 
 * [@fotiecodes](https://github.com/FotieMConstant)
+* [@quiet-programmer](https://github.com/quiet-programmer)
 
 ## License
 This project is licensed under the MIT License - see the LICENSE.md file for details  
