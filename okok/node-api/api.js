@@ -272,12 +272,53 @@ const sendInvite = async (request, response) => {
 
     })
 }
-
 //end of send Invite Button
+
+
+// endpoint to edit user info
+const editUser = async (request, response) => {
+  var person = {
+        name : "",
+        username : "",
+        photo: ""
+  }
+
+  if(request.body.name != "") person.name = request.body.name
+  if(request.body.username != "") person.username = request.body.username
+  if(request.body.photo != "") person.photo = request.body.photo
+
+  con.query("UPDATE person SET name='"+person.name+"',username='"+person.username+"',photo='"+person.photo+"' WHERE uid='"+request.body.uid+"'", function (err, result) {
+    // handling any errors
+   if (err) throw err;
+      response.status(200).json(result)  
+   });
+};
+
+
+const getOneUser = async (request, response) => {
+  con.query("SELECT * FROM person WHERE uid='"+request.params.uid+"'", function (err, result) {
+    // handling any errors
+    var returnVal = {
+      message: "Invalid UID",
+      status: 1
+    }
+    //if invalid uid
+    if(result= undefined || result.length == 0) {
+      response.status(404).json(returnVal)
+      return
+    }
+
+    //if success
+    response.status(200).json(result)  
+   });
+};
+
 
 
 module.exports = {
     getAllusers,
     createUser,
-    sendInvite
+    sendInvite,
+    editUser,
+    getOneUser
 };
