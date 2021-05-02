@@ -10,9 +10,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // enabling CORS to accept from all origins
-app.all("*", (req, res, next) => {
-  console.log(`${new Date()} - request for ${req.path}`);
-  res.set("Access-Control-Allow-Origin", "*");
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
 
