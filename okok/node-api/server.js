@@ -2,8 +2,10 @@
 // Importing express
 const express = require('express');
 const app = express();
+var cors = require('cors')
 const api = require('./api'); //importing the api
-
+// enabling CORS to accept from all origins
+app.use(cors())
 // express.json() and express.urlencoded() are built-in middleware functions to support JSON-encoded and URL-encoded bodies.
 // to be able to get object data from the url
 app.use(express.json());
@@ -13,6 +15,8 @@ app.use(express.urlencoded({ extended: true }));
 app.all("*", (req, res, next) => {
   console.log(`${new Date()} - request for ${req.path}`);
   res.set("Access-Control-Allow-Origin", "*");
+  next();
+});
 
 // the various endpoints
 app.get("/", (req, res) => {
