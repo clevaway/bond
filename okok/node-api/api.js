@@ -75,8 +75,8 @@ const sendInvite = async (request, response) => {
 
   con.query("SELECT uid FROM person WHERE email='"+receiver+"' LIMIT 1", async (err,receiverRes) => {
      
-    // check if receiver is not already a user
-    if(receiverRes.length == 0){
+    /* // check if receiver is not already a user
+      if(receiverRes.length == 0){ */
 
       con.query("SELECT name,email FROM person WHERE email='"+sender+"' LIMIT 1", async (err,senderRes) => {  
         //check if somehow sender email is invalid
@@ -256,11 +256,11 @@ const sendInvite = async (request, response) => {
 
     })
 
-  }else{
-    //if reciever is already a user
-    response.status(200).json("This is not an error: if receiver is already a user module")
+  /*  }else{
+      //if reciever is already a user
+      response.status(200).json("This is not an error: if receiver is already a user module")
 
-  }
+  }*/
   
 })
 
