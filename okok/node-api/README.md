@@ -38,5 +38,42 @@ Navigate to the okok directory and run the following commands to setup the serve
     }
 ]
 ```
-
+## 2- Send Invite
+- Endpoint ``https://bond-api.vercel.app/sendInvite``
+- Method: `POST`
+- Data object (Send in Body*): 
+```
+{
+"sender": "sender's email",
+"receiver": "receiver's email",
+}
+```
+### RESPONSE
+#### In case sender or receiver field is undefined
+```
+[
+    {
+        "status": 1,
+        "message": "Error Posting request"
+    }
+]
+```
+#### In case sender email invalid
+```
+[
+    {
+        "status": 2,
+        "message": "sender email is invalid"
+    }
+]
+```
+#### In success
+```
+[
+    {
+        "status": "sent",
+        "message": "Bond invite sent successfully to receiver"
+    }
+]
+```
 
