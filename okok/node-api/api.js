@@ -126,30 +126,40 @@ const sendInvite = async (request, response) => {
 const editUser = async (request, response) => {
   //initialize return type of error
   var returnErr = {
-    message: "Invalid UID",
+    message: "Invalid Field",
     status: 1
-  };
-
-  var person = {
-        uid: request.body.uid,
-        name : "",
-        username : "",
-        photo: ""
   }
 
-  if(request.body.name != "") person.name = request.body.name
-  if(request.body.username != "") person.username = request.body.username
-  if(request.body.photo != "") person.photo = request.body.photo
+  //checking all fields for undefined/garbage values 
+  if(request.body.name != undefined || request.body.username != undefined ||request.body.photo != undefined || request.body.uid != undefined){
+    response.status(500).json(returnErr)
+    return
+  }
 
-  con.query("UPDATE person SET name='"+person.name+"',username='"+person.username+"',photo='"+person.photo+"' WHERE uid='"+request.body.uid+"'", function (err, result) {
-    // handling any errors
+  //checking all fields for empty values
+  if(request.body.name != "" || request.body.username != "" ||request.body.photo != "" || request.body.uid != ""){
+    returnErr.status = 2
+    returnErr.message = "Cannot update profile with empty fields"
+    response.status(500).json(returnErr)
+    return
+  }
+    
+
+  //updating the person info there is no error
+  con.query("UPDATE person SET name='"+request.body.name+"',username='"+request.body.username+"',photo='"+request.body.photo+"' WHERE uid='"+request.body.uid+"'", function (err, result) {
+    // checking if uid exists and profile was updated successfully
    if(result == undefined || result.length == 0){
-    response.status(200).json(returnErr)
-    return 
+      returnErr.status = 3
+      returnErr.message = "uid doesnt exist"
+      response.status(500).json(returnErr)
+      return 
    }
-   //if success
-    response.status(200).json(person)  
-   });
+
+    //if success
+    response.status(200).json(person)
+   })
+
+
 };
 
 

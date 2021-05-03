@@ -130,12 +130,30 @@ Navigate to the okok directory and run the following commands to setup the serve
     }
 ]
 ```
-#### In case user id does not exist in database
+#### In case if a field is undefined/garbage
 ```
 [
     {
-        message: "Invalid UID",
+        message: "Invalid Field",
         status: 1
+    }
+]
+```
+#### In case if a field is empty
+```
+[
+    {
+        message: "Cannot update profile with empty fields",
+        status: 2
+    }
+]
+```
+#### In case uid doesnt exist
+```
+[
+    {
+        message: "uid doesnt exist",
+        status: 3
     }
 ]
 ```
