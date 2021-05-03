@@ -76,7 +76,7 @@ Navigate to the okok directory and run the following commands to setup the serve
     }
 ]
 ```
-## 2- Get One User
+## 3- Get One User
 - Endpoint ``https://bond-api.vercel.app/users/:uid``
 - Method: `GET`
 - Data object (GET in Body*): 
@@ -107,9 +107,9 @@ Navigate to the okok directory and run the following commands to setup the serve
     }
 ]
 ```
-## 2- Edit User Info
-- Endpoint ``https://bond-api.vercel.app/users/:uid``
-- Method: `GET`
+## 4- Edit User Info
+- Endpoint ``https://bond-api.vercel.app/editUser``
+- Method: `POST`
 - Data object (SEND in Body*): 
 ```
 {
