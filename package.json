@@ -1,1 +1,25 @@
-{}
+{
+  "name": "@fotiemconstant/bond",
+  "scripts": {
+    "prettier": "npx prettier --write eru/src/**/*.js okok/**/*.js"
+  },
+  "devDependencies": {
+    "eslint": "^7.25.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-vue": "^7.9.0",
+    "prettier": "^2.2.1",
+    "pretty-quick": "^3.1.0"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "pretty-quick --staged --pattern '**/*.*(js|ts)'"
+    }
+  },
+  "dependencies": {
+    "husky": "^6.0.0"
+  }
+}
