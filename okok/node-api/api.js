@@ -84,7 +84,7 @@ const sendInvite = async (request, response) => {
       return;
     }
 
-    con.query(`SELECT name,email FROM person WHERE email='${sender}' LIMIT 1`, async (__err, senderRes) => {
+    con.query(`SELECT * FROM person WHERE email='${sender}' LIMIT 1`, async (__err, senderRes) => {
       if (senderRes.length === 0) {
         returnVal.status = 2;
         returnVal.message = 'sender email is invalid';
