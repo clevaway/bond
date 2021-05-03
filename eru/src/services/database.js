@@ -1,25 +1,20 @@
-import store from "@/store";
-import firebaseApp from "@/firebaseConfig"
-import firebase from "firebase";
-
-
+import firebase from 'firebase';
+import firebaseApp from '../firebaseConfig';
+import store from '../store';
 
 // utils
-const db = firebaseApp.database()
+const db = firebaseApp.database();
 
 // SingOut
 firebaseApp.signOut = async () => {
-    try {
-      await firebase.auth().signOut();
-      store.commit("setCurrentUser", null); // Update the state in the store
-      return true;
-    } catch (error) {
-      return error;
-    }
-  };
-
-
-
+  try {
+    await firebase.auth().signOut();
+    store.commit('setCurrentUser', null); // Update the state in the store
+    return true;
+  } catch (error) {
+    return error;
+  }
+};
 
 //   if(store.state.currentUser){
 //   let getUpdate = db.ref('users/'+store.state.currentUser.uid);
@@ -29,6 +24,4 @@ firebaseApp.signOut = async () => {
 //   });
 // }
 
-
-  // vibrate both users phones
-  
+// vibrate both users phones
