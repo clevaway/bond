@@ -114,7 +114,6 @@ Navigate to the okok directory and run the following commands to setup the serve
 ```
 {
     uid: "uid of target",
-    name : "name of target",
     username : "username of target",
     photo: "photo of target"
 }
@@ -124,9 +123,8 @@ Navigate to the okok directory and run the following commands to setup the serve
 ```
 [
     {
-        "name": "changed name of user",
-        "username": "changed username of user",
-        "photo": "changed photo of user"
+        message: "Profile updated successfully",
+        status: 0
     }
 ]
 ```
@@ -152,8 +150,17 @@ Navigate to the okok directory and run the following commands to setup the serve
 ```
 [
     {
-        message: "uid doesnt exist",
+        message: "User ID doesnt exist",
         status: 3
+    }
+]
+```
+#### In case username already taken
+```
+[
+    {
+        message: "Username already taken",
+        status: 4
     }
 ]
 ```
