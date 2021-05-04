@@ -1,20 +1,14 @@
 <template>
   <div>
-    <v-container
-      id="wrapper"
-      class="pa-12 mx-auto mt-5"
-      elevation="12"
-      max-width="500"
+    <v-container id="wrapper" class="pa-12 mx-auto mt-5" elevation="12" max-width="500"
       ><center>
-        <h3 class="title font-weight-regular mb-5">
-          Add your partner to get started.
-        </h3>
+        <h3 class="title font-weight-regular mb-5">Add your partner to get started.</h3>
         <BondAvatars
           :yourPhoto="currentUser.photoURL"
-          partnerPhoto="https://www.superselected.com/wp-content/uploads/2019/02/Black-Woman-Braided-Hair.jpg"
+          partnerPhoto="https://www.voanews.com/themes/custom/voa/images/Author__Placeholder.png"
         />
         <br />
-        <p class="mt-3 font-weight-light">You & Anna</p>
+        <p class="mt-3 font-weight-light">You & Partner</p>
         <br />
         <AddPartner />
         <br />
@@ -38,13 +32,7 @@
     >
       {{ snackbarNotification.snackMessage }}
       <template v-slot:action="{ attrs }">
-        <v-btn
-          color="white"
-          text
-          v-bind="attrs"
-          @click="snackbarNotification.status = false"
-          >Close</v-btn
-        >
+        <v-btn color="white" text v-bind="attrs" @click="snackbarNotification.status = false">Close</v-btn>
       </template>
     </v-snackbar>
     <!-- / notification snackbar -->
@@ -54,13 +42,13 @@
 <script>
 // @ is an alias to /src
 // import HelloWorld from "@/components/HelloWorld.vue";
-import store from "@/store";
+import store from '@/store';
 // import socket from "@/plugins/socketio.js";
-import firebaseApp from "@/firebaseConfig";
-import firebase from "firebase";
-import BondAvatars from "@/components/userComponents/BondAvatars.vue";
-import LikeButton from "@/components/userComponents/LikeButton.vue";
-import AddPartner from "@/components/AddPartner.vue";
+import firebaseApp from '@/firebaseConfig';
+import firebase from 'firebase';
+import BondAvatars from '@/components/userComponents/BondAvatars.vue';
+import LikeButton from '@/components/userComponents/LikeButton.vue';
+import AddPartner from '@/components/AddPartner.vue';
 firebaseApp; //calling firebase init
 export default {
   components: {
@@ -72,9 +60,9 @@ export default {
     return {
       currentUser: store.state.currentUser,
       snackbarNotification: {
-        snackMessage: "No data",
+        snackMessage: 'No data',
         status: false,
-        color: "",
+        color: '',
         displayTime: 3000,
       },
     };
@@ -90,11 +78,11 @@ export default {
     },
     // ping partner funtion
     pingPartner() {
-      console.log("vibe debugger...");
+      console.log('vibe debugger...');
       window.navigator.vibrate([200, 52, 600, 400]); // vibrate for 200ms
       this.snackbarNotification.status = true;
-      this.snackbarNotification.color = "primary";
-      this.snackbarNotification.snackMessage = "❤ Vibe!";
+      this.snackbarNotification.color = 'primary';
+      this.snackbarNotification.snackMessage = '❤ Vibe!';
       this.snackbarNotification.displayTime = 5000;
       //   vibrate user's device first
     },
@@ -102,11 +90,11 @@ export default {
     async signOut() {
       try {
         await firebase.auth().signOut();
-        store.commit("setCurrentUser", null); // Update the state in the store
-        this.$router.push("/auth");
+        store.commit('setCurrentUser', null); // Update the state in the store
+        this.$router.push('/auth');
       } catch (error) {
         this.snackbarNotification.status = true;
-        this.snackbarNotification.color = "red";
+        this.snackbarNotification.color = 'red';
         this.snackbarNotification.snackMessage = error;
         this.snackbarNotification.displayTime = 6000;
       }
