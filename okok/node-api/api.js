@@ -72,22 +72,16 @@ const sendInvite = async (request, response) => {
     status: 1,
   };
 
-  if (sender === undefined || receiver === undefined || sender.length === 0 || receiver.length === 0) {
+  if (sender === undefined || receiver === undefined || sender.length === 0 || receiver.length === 0 ||typeof sender === 'object' ||typeof receiver === 'object') {
     response.status(500).json(returnVal);
     return;
   }
 
-  con.query(`SELECT uid FROM person WHERE email='${receiver}' LIMIT 1`, async (_err, receiverRes) => {
-    // check if receiver is not already a user
-    if (receiverRes.length > 0) {
-      response.status(200).json('This is not an error: if receiver is already a user module');
-      return;
-    }
 
     con.query(`SELECT * FROM person WHERE email='${sender}' LIMIT 1`, async (__err, senderRes) => {
       if (senderRes.length === 0) {
         returnVal.status = 2;
-        returnVal.message = 'sender email is invalid';
+        returnVal.message = 'Sender email is invalid';
         response.status(500).json(returnVal);
         return;
       }
@@ -119,7 +113,7 @@ const sendInvite = async (request, response) => {
       // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
       response.status(200).json([{ status: 'sent', message: `Bond invite sent successfully to ${receiver}` }]);
     });
-  });
+
 };
 
 // endpoint to edit user info
