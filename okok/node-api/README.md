@@ -44,8 +44,8 @@ Navigate to the okok directory and run the following commands to setup the serve
 - Data object (Send in Body*): 
 ```
 {
-"sender": "sender's email",
-"receiver": "receiver's email",
+"senderEmail": "sender's email",
+"receiverEmail": "receiver's email",
 }
 ```
 ### RESPONSE
