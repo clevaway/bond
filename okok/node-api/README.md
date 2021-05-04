@@ -76,4 +76,84 @@ Navigate to the okok directory and run the following commands to setup the serve
     }
 ]
 ```
-
+## 3- Get One User
+- Endpoint ``https://bond-api.vercel.app/users/:uid``
+- Method: `GET`
+- Data object (GET in Body*): 
+```
+{
+    "uid":"uid from parameters",
+}
+```
+### RESPONSE
+#### In success
+```
+[
+    {
+        "uid":"uid of target",
+        "name":"name of target",
+        "username":"unsername of target",
+        "email":"email of target",
+        "photo":"photo of target"
+    }
+]
+```
+#### In case user id does not exist in database
+```
+[
+    {
+        message: "Invalid UID",
+        status: 1
+    }
+]
+```
+## 4- Edit User Info
+- Endpoint ``https://bond-api.vercel.app/editUser``
+- Method: `POST`
+- Data object (SEND in Body*): 
+```
+{
+    uid: "uid of target",
+    name : "name of target",
+    username : "username of target",
+    photo: "photo of target"
+}
+```
+### RESPONSE
+#### In success
+```
+[
+    {
+        "name": "changed name of user",
+        "username": "changed username of user",
+        "photo": "changed photo of user"
+    }
+]
+```
+#### In case if a field is undefined/garbage
+```
+[
+    {
+        message: "Invalid Field",
+        status: 1
+    }
+]
+```
+#### In case if a field is empty
+```
+[
+    {
+        message: "Cannot update profile with empty fields",
+        status: 2
+    }
+]
+```
+#### In case uid doesnt exist
+```
+[
+    {
+        message: "uid doesnt exist",
+        status: 3
+    }
+]
+```

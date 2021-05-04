@@ -25,11 +25,17 @@ app.get('/', (req, res) => {
 // calling for implimentation of getting all users
 app.get('/users', api.getAllusers);
 
+//getting just one user
+app.get('/users/:uid', api.getOneUser);
+
 // sending bond invite
 app.post('/sendInvite', api.sendInvite);
 
 // persist user data in db to create a new user
 app.post('/user', api.createUser);
+
+// post request to edit user info
+app.post('/editUser',api.editUser);
 
 // setting the port of the process or a default port
 const port = process.env.PORT || 3000;

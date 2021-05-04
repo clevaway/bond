@@ -25,8 +25,8 @@ const getAllusers = async (request, response) => {
 
       return {
         ...user,
-        uid: uid.replace(/^(.{2})[^@]+/, '$1****'),
-        email: email.replace(/^(.{2})[^@]+/, '$1****'),
+        uid: uid.toString().replace(/^(.{2})[^@]+/, '$1****'),
+        email: email.toString().replace(/^(.{2})[^@]+/, '$1****'),
       };
     });
 
@@ -122,8 +122,90 @@ const sendInvite = async (request, response) => {
   });
 };
 
+// endpoint to edit user info
+const editUser = async (request, response) => {
+
+  //initialize return object of error
+  var returnErr = {
+    message: "Invalid Field",
+    status: 1
+  }
+
+  //initialize person to return to response
+  var personReturn = {
+    name: request.body.name,
+    username: request.body.username,
+    photo: request.body.photo
+  }
+
+  //checking all fields for null/garbage values 
+  if(typeof request.body.name === 'object' ||typeof request.body.username === 'object' ||typeof request.body.uid === 'object'){
+    return response.status(500).json(returnErr)
+  }
+
+  //not allowing username and name to have special characters
+  personReturn.name = request.body.name.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\//\s]/gi, '');
+  personReturn.username = request.body.username.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\//\s]/gi, '');
+
+  //checking all fields for empty values
+  if(personReturn.name == "" || personReturn.username == "" ||request.body.photo == "" || request.body.uid == ""){
+    returnErr.status = 2;
+    returnErr.message = "Cannot update profile with empty fields";
+    return response.status(500).json(returnErr)
+  }
+  
+
+  //updating the person info there is no error
+  con.query("UPDATE person SET name='"+personReturn.name+"',username='"+personReturn.username+"',photo='"+request.body.photo+"' WHERE uid='"+request.body.uid+"'", function (err, result) {
+
+    //checking if uid exists and profile was updated successfully
+    if(result.affectedRows == 0 ){
+      returnErr.status = 3;
+      returnErr.message = "uid doesnt exist";
+      return response.status(500).json(returnErr)
+    }
+
+    
+
+    //if successfull
+    response.status(200).json(personReturn)
+   
+    
+   })
+
+
+};
+
+
+const getOneUser = async (request, response) => {
+  //initialize return type of error
+  var returnErr = {
+    message: "Invalid UID",
+    status: 1
+  };
+
+  con.query("SELECT * FROM person WHERE uid='"+request.params.uid+"'", function (err, result) {
+    //if invalid uid
+    if(result== undefined || result.length == 0) {
+      response.status(404).json(returnErr)
+      return
+    }
+    result.map((user) => {
+      user.uid = user.uid.toString().replace(/^(.{2})[^@]+/, "$1****");
+      user.email = user.email.toString().replace(/^(.{2})[^@]+/, "$1****");
+    })
+    
+    //if success
+    response.status(200).json(result);  
+   });
+};
+
+
+
 module.exports = {
-  getAllusers,
-  createUser,
-  sendInvite,
+    getAllusers,
+    createUser,
+    sendInvite,
+    editUser,
+    getOneUser
 };
