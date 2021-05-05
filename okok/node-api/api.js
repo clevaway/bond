@@ -61,13 +61,6 @@ const getAllusers = async (request, response) => {
 }
 };
 
-
-const getOneUser = async (request, response) => {
-  //initialize return type of error
-  
-
-};
-
 // endpoint to persist users
 const createUser = async (request, response) => {
   const {
