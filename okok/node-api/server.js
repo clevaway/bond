@@ -26,7 +26,7 @@ app.get('/', (req, res) => {
 app.get('/users', api.getAllusers);
 
 //getting just one user
-app.get('/users/:uid', api.getOneUser);
+//app.get('/users/:uid', api.getOneUser);
 
 // sending bond invite
 app.post('/sendInvite', api.sendInvite);

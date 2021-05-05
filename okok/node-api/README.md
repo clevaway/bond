@@ -76,38 +76,7 @@ Navigate to the okok directory and run the following commands to setup the serve
     }
 ]
 ```
-## 3- Get One User
-- Endpoint ``https://bond-api.vercel.app/users/:uid``
-- Method: `GET`
-- Data object (GET in Body*): 
-```
-{
-    "uid":"uid from parameters",
-}
-```
-### RESPONSE
-#### In success
-```
-[
-    {
-        "uid":"uid of target",
-        "name":"name of target",
-        "username":"unsername of target",
-        "email":"email of target",
-        "photo":"photo of target"
-    }
-]
-```
-#### In case user id does not exist in database
-```
-[
-    {
-        message: "Invalid UID",
-        status: 1
-    }
-]
-```
-## 4- Edit User Info
+## 3- Edit User Info
 - Endpoint ``https://bond-api.vercel.app/editUser``
 - Method: `POST`
 - Data object (SEND in Body*): 
@@ -161,6 +130,46 @@ Navigate to the okok directory and run the following commands to setup the serve
     {
         message: "Username already taken",
         status: 4
+    }
+]
+```
+## 4- Get user/users
+- Endpoint ``https://bond-api.vercel.app/users``
+- Method: `GET`
+- Data object (Send in Query Parameters*): 
+```
+{
+"uid": "uid of target user"
+}
+```
+### RESPONSE
+#### In success
+```
+[
+    {
+        "uid": "uid of target",
+        "name": "name of target",
+        "username":"username of target",
+        "email":"email of target",
+        "photo":"photo of target"
+    }
+]
+```
+#### In case uid doesnt exist
+```
+[
+    {
+        "status": 1,
+        "message": "Invalid UID"
+    }
+]
+```
+#### In case query variable is not "uid"
+```
+[
+    {
+        "status": 2,
+        "message": "Could not handle that request"
     }
 ]
 ```
