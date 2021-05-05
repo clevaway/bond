@@ -26,7 +26,7 @@ const getAllusers = async (request, response) => {
     if (err) throw err;
 
     // mapping through to hide the email and uid of user for security
-    const updated = result.map((user) => {
+    /*const updated = result.map((user) => {
       const { uid, email } = user;
 
       return {
@@ -34,9 +34,9 @@ const getAllusers = async (request, response) => {
         uid: uid.toString().replace(/^(.{2})[^@]+/, '$1****'),
         email: email.toString().replace(/^(.{2})[^@]+/, '$1****'),
       };
-    });
+    });*/
 
-    response.status(200).json(updated);
+    response.status(200).json(result);
   });
 }else{
   //check if query variable name is "uid"
@@ -213,6 +213,5 @@ module.exports = {
     getAllusers,
     createUser,
     sendInvite,
-    editUser,
-    getOneUser
+    editUser
 };
