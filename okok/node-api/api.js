@@ -231,13 +231,13 @@ const bondUsers =async (request,response) =>{
   con.query("SELECT name,uid from person WHERE uid='"+uid_1+"' LIMIT 1", function (err, result_1) {
     
     // check if uid_1 does not exist then return err
-    if(result_1 == undefined||result_1.length == 0) return response.status(500).json(returnErr)
+    if(result_1.length == 0) return response.status(500).json(returnErr)
 
     // check if uid_2 exists in database
     con.query("SELECT name,uid from person WHERE uid='"+uid_2+"' LIMIT 1", function (err, result_2) {
 
       // check if uid_2 does not exist then return err
-      if(result_2 == undefined|| result_2.length == 0 ) return response.status(500).json(returnErr)
+      if(result_2.length == 0 ) return response.status(500).json(returnErr)
 
         // get all room_id for uid_1
         con.query("SELECT room_id from bond WHERE person_uid='"+uid_1+"'", function (err, result_roomIds_1) {
