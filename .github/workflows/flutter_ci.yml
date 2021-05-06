@@ -16,7 +16,7 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           channel: "stable"
-      - run: flutter pub get ndole/bond_app/
+      - run: flutter pub get
       - run: flutter build apk -t ndole/bond_app/lib/main.dart --split-per-abi
       - name: Release apk
         uses: ncipollo/release-action@v1
