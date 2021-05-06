@@ -14,24 +14,40 @@ const con = mysql.createConnection({
 
 // endpoint to get all users
 const getAllusers = async (request, response) => {
-  console.log('Return all bond users');
+  //initialize return fields incase of error
+  var returnErr = {
+    message: "Invalid UID",
+    status: 1
+  };
+  //check wether a query is present
+  if(Object.keys(request.query).length === 0){
   con.query('SELECT * FROM person', (err, result) => {
     // handling any errors
     if (err) throw err;
 
-    // mapping through to hide the email and uid of user for security
-    /*const updated = result.map((user) => {
-      const { uid, email } = user;
-
-      return {
-        ...user,
-        uid: uid.toString().replace(/^(.{2})[^@]+/, '$1****'),
-        email: email.toString().replace(/^(.{2})[^@]+/, '$1****'),
-      };
-    });*/
-
     response.status(200).json(result);
   });
+}else{
+  //check if query variable name is "uid"
+  if(request.query.uid != null){
+    con.query("SELECT * FROM person WHERE uid='"+request.query.uid+"' LIMIT 1", function (err, result) {
+      //if invalid uid
+      if(result== undefined || result.length == 0) {
+        response.status(404).json(returnErr)
+        return
+      }
+
+      //if success
+      return response.status(200).json(result);  
+    })
+  }else{
+    //if variable not "uid"
+    returnErr.status = 2
+    returnErr.message = "Could not handle that request"
+    response.status(500).json(returnErr)
+  }
+  
+}
 };
 
 // endpoint to persist users
@@ -178,30 +194,6 @@ const editUser = async (request, response) => {
 
   })//end of select query
 
-};
-
-
-const getOneUser = async (request, response) => {
-  //initialize return type of error
-  var returnErr = {
-    message: "Invalid UID",
-    status: 1
-  };
-
-  con.query("SELECT * FROM person WHERE uid='"+request.params.uid+"'", function (err, result) {
-    //if invalid uid
-    if(result== undefined || result.length == 0) {
-      response.status(404).json(returnErr)
-      return
-    }
-    result.map((user) => {
-      user.uid = user.uid.toString().replace(/^(.{2})[^@]+/, "$1****");
-      user.email = user.email.toString().replace(/^(.{2})[^@]+/, "$1****");
-    })
-    
-    //if success
-    response.status(200).json(result);  
-   });
 };
 
 

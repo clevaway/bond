@@ -76,17 +76,17 @@ Navigate to the okok directory and run the following commands to setup the serve
     }
 ]
 ```
-## 3- Get One User
-- Endpoint ``https://bond-api.vercel.app/users/:uid``
+## 3- Get User/Users
+- Endpoint ``https://bond-api.vercel.app/users``
 - Method: `GET`
-- Data object (GET in Body*): 
+- Data object (GET in Query*): 
 ```
 {
     "uid":"uid from parameters",
 }
 ```
 ### RESPONSE
-#### In success
+#### Get all users - In success
 ```
 [
     {
@@ -104,6 +104,15 @@ Navigate to the okok directory and run the following commands to setup the serve
     {
         message: "Invalid UID",
         status: 1
+    }
+]
+```
+#### In case query paramter variable is not "uid"
+```
+[
+    {
+        message: "Could not handle that request",
+        status: 2
     }
 ]
 ```
