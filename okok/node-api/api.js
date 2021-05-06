@@ -197,12 +197,30 @@ const editUser = async (request, response) => {
 
 };
 
+const compareRoomIds = (roomIds_1,roomIds_2) =>{
+  var flag = false
+  //iterate roomIds of uid_1
+  for(var i = 0 ; i < roomIds_1.length ; i++){
+    //iterate roomIds of uid_2
+    
+    for(var j = 0 ; j < roomIds_2.length ; j++){
+      //if there is an equal then flag = true
+
+      if(roomIds_1[i].room_id == roomIds_2[j].room_id) flag=true
+    }
+  }
+
+  return flag
+}
+
 const bondUsers =async (request,response) =>{
 
   //get variables
   const uid_1 = request.body.uid_1
   const uid_2 = request.body.uid_2
   const roomID = uuidv4();
+  var roomIds_1 = [];
+  var roomIds_2 = [];
 
   var returnErr = {
       status : 1,
@@ -221,63 +239,85 @@ const bondUsers =async (request,response) =>{
       // check if uid_2 does not exist then return err
       if(result_2 == undefined|| result_2.length == 0 ) return response.status(500).json(returnErr)
 
-      //set the returnErr to another error type
-      returnErr.status = 2
-      returnErr.message = "There was a problem executing the request"
+        // get all room_id for uid_1
+        con.query("SELECT room_id from bond WHERE person_uid='"+uid_1+"'", function (err, result_roomIds_1) {
 
-      //start transaction
-      con.beginTransaction((err) =>{
+          //if not empty then get results otherwise use default = []
+          if(result_roomIds_1.length != 0 ) roomIds_1 = result_roomIds_1
 
-        // Failure transaction
-        if(err){
-          return con.rollback(() => {
-            throw response.status(500).json(returnErr)
-          })
-        }
-      
-        //room name default format
-        var room_name = result_1[0].name +" & "+ result_2[0].name 
+          // get all room_id for uid_2
+          con.query("SELECT room_id from bond WHERE person_uid='"+uid_2+"'", function (err, result_roomIds_2) {
 
-        //insert to room_table before bond_table
-        con.query("INSERT INTO room VALUES ('"+roomID+"','"+room_name+"')", function (err, result_room) {
-          // Failure transaction
-          if(err){
-            return con.rollback(() => {
-              throw response.status(500).json(returnErr)
-            })
+          //if not empty then get results otherwise use default = []
+          if(result_roomIds_2.length != 0 ) roomIds_2 = result_roomIds_2
+
+          //compare to see if they have a similar room_id and return status 500 if true
+          if(compareRoomIds(roomIds_1,roomIds_2)){
+            returnErr.status = 3
+            returnErr.message = "Bond is already created"
+            response.status(500).json(returnErr)
+            return
           }
-          
-          //insert to bond with uid_1
-          con.query("INSERT INTO bond VALUES ('"+result_room.insertId+"','"+result_1[0].uid+"')", function (err, result_bond_1) {
+
+          //set the returnErr to another error type
+          returnErr.status = 2
+          returnErr.message = "There was a problem executing the request"
+
+          //start transaction
+          con.beginTransaction((err) =>{
+
             // Failure transaction
             if(err){
               return con.rollback(() => {
                 throw response.status(500).json(returnErr)
               })
             }
+          
+            //room name default format
+            var room_name = result_1[0].name +" & "+ result_2[0].name 
 
-              //insert to bond with uid_2
-            con.query("INSERT INTO bond VALUES ('"+result_room.insertId+"','"+result_2[0].uid+"')", function (err, result_bond_2) {
+            //insert to room_table before bond_table
+            con.query("INSERT INTO room VALUES ('"+roomID+"','"+room_name+"')", function (err, result_room) {
               // Failure transaction
               if(err){
                 return con.rollback(() => {
                   throw response.status(500).json(returnErr)
                 })
-              }else{
-                con.commit((err)=>{
+              }
+              
+              //insert to bond with uid_1
+              con.query("INSERT INTO bond VALUES ('"+result_room.insertId+"','"+result_1[0].uid+"')", function (err, result_bond_1) {
+                // Failure transaction
+                if(err){
+                  return con.rollback(() => {
+                    throw response.status(500).json(returnErr)
+                  })
+                }
+
+                  //insert to bond with uid_2
+                con.query("INSERT INTO bond VALUES ('"+result_room.insertId+"','"+result_2[0].uid+"')", function (err, result_bond_2) {
                   // Failure transaction
                   if(err){
                     return con.rollback(() => {
                       throw response.status(500).json(returnErr)
                     })
-                  }
+                  }else{
+                    con.commit((err)=>{
+                      // Failure transaction
+                      if(err){
+                        return con.rollback(() => {
+                          throw response.status(500).json(returnErr)
+                        })
+                      }
 
-                  //if success
-                  returnErr.status = 0
-                  returnErr.message = "Bond Success!"
-                  response.status(200).json(returnErr)
+                      //if success
+                      returnErr.status = 0
+                      returnErr.message = "Bond Success!"
+                      response.status(200).json(returnErr)
+                    })
+                  }
                 })
-              }
+              })
             })
           })
         })

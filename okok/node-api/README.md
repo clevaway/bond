@@ -202,12 +202,21 @@ Navigate to the okok directory and run the following commands to setup the serve
     }
 ]
 ```
-#### In case if bond already exists / there was a problem in executing database query
+#### In case if there was a problem in executing database query
 ```
 [
     {
         message: "There was a problem executing the request",
         status: 2
+    }
+]
+```
+#### In case if bond already exists
+```
+[
+    {
+        message: "Bond is already created",
+        status: 3
     }
 ]
 ```
