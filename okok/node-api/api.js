@@ -3,7 +3,7 @@ const nodemailer = require('nodemailer');
 require('dotenv').config();
 const Cryptr = require('cryptr');
 const formattedHTMLInvite = require('./email/invite');
-const { v4: uuidv4 } = require("uuid")
+const { v4: uuidv4 } = require('uuid')
 
 const con = mysql.createConnection({
   host: process.env.DB_HOST,
@@ -199,6 +199,9 @@ const editUser = async (request, response) => {
 
 const compareRoomIds = (roomIds_1,roomIds_2) =>{
   var flag = false
+
+  if(roomIds_1 == [] || roomIds_2 == []) return flag
+
   //iterate roomIds of uid_1
   for(var i = 0 ; i < roomIds_1.length ; i++){
     //iterate roomIds of uid_2
@@ -231,13 +234,13 @@ const bondUsers =async (request,response) =>{
   con.query("SELECT name,uid from person WHERE uid='"+uid_1+"' LIMIT 1", function (err, result_1) {
     
     // check if uid_1 does not exist then return err
-    if(result_1.length == 0) return response.status(500).json(returnErr)
+    if(result_1.length == 0 || result_1 == undefined) return response.status(500).json(returnErr)
 
     // check if uid_2 exists in database
     con.query("SELECT name,uid from person WHERE uid='"+uid_2+"' LIMIT 1", function (err, result_2) {
-
+      
       // check if uid_2 does not exist then return err
-      if(result_2.length == 0 ) return response.status(500).json(returnErr)
+      if(result_2.length == 0 || result_1 == undefined) return response.status(500).json(returnErr)
 
         // get all room_id for uid_1
         con.query("SELECT room_id from bond WHERE person_uid='"+uid_1+"'", function (err, result_roomIds_1) {
@@ -272,7 +275,7 @@ const bondUsers =async (request,response) =>{
                 throw response.status(500).json(returnErr)
               })
             }
-          
+            
             //room name default format
             var room_name = result_1[0].name +" & "+ result_2[0].name 
 
@@ -286,17 +289,18 @@ const bondUsers =async (request,response) =>{
               }
               
               //insert to bond with uid_1
-              con.query("INSERT INTO bond VALUES ('"+result_room.insertId+"','"+result_1[0].uid+"')", function (err, result_bond_1) {
+              con.query("INSERT INTO bond VALUES ('"+roomID+"','"+result_1[0].uid+"')", function (err, result_bond_1) {
                 // Failure transaction
                 if(err){
                   return con.rollback(() => {
                     throw response.status(500).json(returnErr)
                   })
                 }
-
+                
                   //insert to bond with uid_2
-                con.query("INSERT INTO bond VALUES ('"+result_room.insertId+"','"+result_2[0].uid+"')", function (err, result_bond_2) {
+                con.query("INSERT INTO bond VALUES ('"+roomID+"','"+result_2[0].uid+"')", function (err, result_bond_2) {
                   // Failure transaction
+                  
                   if(err){
                     return con.rollback(() => {
                       throw response.status(500).json(returnErr)
