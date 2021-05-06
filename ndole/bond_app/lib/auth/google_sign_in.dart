@@ -1,3 +1,4 @@
+import 'package:bond_app/services/api_request.dart';
 import 'package:bond_app/services/auth.dart';
 import 'package:flutter/material.dart';
 
@@ -8,39 +9,44 @@ class GoogleSignInScreen extends StatefulWidget {
 
 class _GoogleSignInScreenState extends State<GoogleSignInScreen> {
   final AuthService _authService = AuthService();
+  final ApiRequest _apiRequest = ApiRequest();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Center(
-            child: InkWell(
-              onTap: () {
-                _authService.signUpWithGoogle(context);
-              },
-              child: Container(
-                height: 40,
-                width: 220,
-                decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      'assets/logo/google_logo.png',
-                      height: 50,
-                      width: 50,
-                    ),
-                    Text(
-                      'Sign in with Google',
-                    )
-                  ],
-                ),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Center(
+          child: InkWell(
+            onTap: () {
+              _authService
+                  .signUpWithGoogle(context)
+                  .then((value) => _apiRequest.authUserToDB());
+            },
+            child: Container(
+              height: 40,
+              width: 220,
+              decoration: BoxDecoration(
+                color: Colors.grey[200],
+                borderRadius: BorderRadius.circular(30),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'assets/logo/google_logo.png',
+                    height: 50,
+                    width: 50,
+                  ),
+                  Text(
+                    'Sign in with Google',
+                  )
+                ],
               ),
             ),
-          )),
+          ),
+        ),
+      ),
     );
   }
 }
