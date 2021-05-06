@@ -5,7 +5,7 @@ on:
       - main
 
 jobs:
-  build_appbundle:
+  build:
     name: Build Flutter (Android)
     runs-on: ubuntu-latest
     steps:
