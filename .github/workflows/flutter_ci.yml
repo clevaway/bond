@@ -17,8 +17,12 @@ jobs:
         with:
           channel: "stable"
       - run: flutter pub get
-      - run: flutter clean
       - run: flutter build apk -t ndole/bond_app/lib/main.dart --split-per-abi
+      - name: Release apk
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: 'build/app/outputs/apk/release/*.apk'
+          token: ${{secrets.TOKEN}}
       # - run: flutter build appbundle
 
       
