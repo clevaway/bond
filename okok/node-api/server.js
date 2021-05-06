@@ -34,6 +34,9 @@ app.post('/user', api.createUser);
 // post request to edit user info
 app.post('/editUser',api.editUser);
 
+// post request to bond users 
+app.post('/bondUsers',api.bondUsers);
+
 // setting the port of the process or a default port
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
