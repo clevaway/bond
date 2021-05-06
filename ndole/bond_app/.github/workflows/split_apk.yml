@@ -1,6 +1,6 @@
 name: Split APK
 on:
-  pull_request:
+  push:
     tags:
       - v*
 jobs:
