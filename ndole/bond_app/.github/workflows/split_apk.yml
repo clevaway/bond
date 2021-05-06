@@ -1,8 +1,11 @@
 name: Split APK
 on:
   push:
-    tags:
-      - v*
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 jobs:
   build:
     name: Build APK's
