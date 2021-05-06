@@ -1,27 +1,27 @@
-name: Split APK
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-jobs:
-  build:
-    name: Build APK's
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-java@v1
-        with:
-          java-version: '12.x'
-      - uses: subosito/flutter-action@v1.5.0
-        with:
-          channel: "stable"
-      - run: flutter pub get
-      - run: flutter build apk -t lib/main.dart --split-per-abi
-      - name: Release apk
-        uses: ncipollo/release-action@v1
-        with:
-          artifacts: 'build/app/outputs/apk/release/*.apk'
-          token: ${{secrets.TOKEN}}
+# name: Split APK
+# on:
+#   push:
+#     branches:
+#       - main
+#   pull_request:
+#     branches:
+#       - main
+# jobs:
+#   build:
+#     name: Build APK's
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v1
+#       - uses: actions/setup-java@v1
+#         with:
+#           java-version: '12.x'
+#       - uses: subosito/flutter-action@v1.5.0
+#         with:
+#           channel: "stable"
+#       - run: flutter pub get
+#       - run: flutter build apk -t ndole/bond_app/lib/main.dart --split-per-abi
+#       - name: Release apk
+#         uses: ncipollo/release-action@v1
+#         with:
+#           artifacts: 'build/app/outputs/apk/release/*.apk'
+#           token: ${{secrets.TOKEN}}
