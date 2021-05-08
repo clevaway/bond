@@ -8,7 +8,7 @@ on:
       - main
 jobs:
   build:
-    name: Build APK's
+    name: Build Flutter (Android)
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -22,9 +22,6 @@ jobs:
         with:
           channel: "stable"
       - run: flutter pub get
+      - run: flutter pub outdated
+      - run: flutter pub upgrade
       - run: flutter build apk --release
-      - name: Release apk
-        uses: ncipollo/release-action@v1
-        with:
-          artifacts: 'build/app/outputs/apk/release/*.apk'
-          token: ${{secrets.TOKEN}}
