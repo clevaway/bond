@@ -20,7 +20,7 @@ jobs:
           channel: "stable"
       - run: cd ndole/bond_app
       - run: flutter pub get
-      - run: flutter build apk --release
+      - run: flutter build apk --target lib/main.dart
       - name: Release apk
         uses: ncipollo/release-action@v1
         with:
