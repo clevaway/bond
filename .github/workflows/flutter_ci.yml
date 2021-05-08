@@ -10,6 +10,9 @@ jobs:
   build:
     name: Build APK's
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./ndole/bond_app/
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-java@v1
@@ -18,11 +21,8 @@ jobs:
       - uses: subosito/flutter-action@v1.5.0
         with:
           channel: "stable"
-      - run: cd ndole/
-      - run: pwd
-      - run: cd bond_app/
       - run: flutter pub get
-      - run: flutter build apk --target lib/main.dart
+      - run: flutter build apk --release
       - name: Release apk
         uses: ncipollo/release-action@v1
         with:
