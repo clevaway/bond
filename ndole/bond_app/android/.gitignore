@@ -11,4 +11,4 @@ GeneratedPluginRegistrant.java
 key.properties
 
 # google service json
-app/google-services.json
+# app/google-services.json

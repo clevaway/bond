@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "369051961186",
+    "project_id": "bond-8b4fb",
+    "storage_bucket": "bond-8b4fb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:369051961186:android:4f1ef5f8125ea48e5f0e3b",
+        "android_client_info": {
+          "package_name": "com.bond.bond_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "369051961186-72khfetriuos2eusdi74ih526gbok87a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bond.bond_app",
+            "certificate_hash": "86f33c8061aab65d4fbfea31e1bd8700afc8abf5"
+          }
+        },
+        {
+          "client_id": "369051961186-sid6h7v1s1o1i58900bn1vus1mh6abob.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsFS8hSg6z4ngtGZKB1M8_bx9UMr5xIFY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "369051961186-sid6h7v1s1o1i58900bn1vus1mh6abob.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
