@@ -9,6 +9,7 @@ on:
 jobs:
   build:
     name: Build Flutter (Android)
+    # needs: [flutter_test]
     runs-on: ubuntu-latest
     defaults:
       run:
