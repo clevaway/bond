@@ -9,6 +9,7 @@ jobs:
     steps:
       - checkout
       - run: flutter doctor
+      - run: cd ndole/bond_app
       - run: flutter build apk --release
       - store_artifacts:
-          path: ndole/bond_app/build/app/outputs/flutter-apk/app-release.apk
+          path: build/app/outputs/flutter-apk/app-release.apk
