@@ -18,11 +18,9 @@ jobs:
       - uses: subosito/flutter-action@v1.5.0
         with:
           channel: "stable"
-      - name: Chnage directory to ndole
-      - run: cd ndole
+      - run: cd ndole/
       - run: pwd
-      - name: Chnage directory to bond_app
-      - run: cd bond_app
+      - run: cd bond_app/
       - run: flutter pub get
       - run: flutter build apk --target lib/main.dart
       - name: Release apk
