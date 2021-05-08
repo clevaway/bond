@@ -5,7 +5,7 @@
   <strong>Keep connected, And you’ll always stay in touch 🚀</strong>
 </p>
 <p align="center">
-  <a href="https://discord.com/invite/DJHntQ8PQr">
+  <a href="https://discord.gg/cA8zVJ7wgR">
     <img src="https://img.shields.io/badge/Discord-Online-green?style=for-the-badge&logo=appveyor" alt="discord - users online" />
   </a>
 </p>
@@ -39,6 +39,7 @@ To get started! You're going to fork this repository, try creating a branch, mak
 
 
 ## Contributing
+### Remember please all pull request should be sent to the main branch*
 Please read [CONTRIBUTING.md](https://github.com/FotieMConstant/bond/blob/main/CONTRIBUTING.md) for details on this project.
 
 ## Code of Conduct
@@ -49,6 +50,7 @@ Contributors helping to review/merge pull requests:
 
 * [@dilanlongla](https://github.com/dilanlongla) 
 * [@fotiecodes](https://github.com/FotieMConstant)
+* [@quiet-programmer](https://github.com/quiet-programmer)
 
 ## License
 This project is licensed under the MIT License - see the LICENSE.md file for details  
