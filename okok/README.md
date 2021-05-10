@@ -1,10 +1,8 @@
+# okok - websocket
+Navigate to the okok/websocket directory for directives on contributing the websocket server
+
 # okok - node backend
- - dependencies
-    - express
-    - socket.io
-## Project setup
-Navigate to the okok directory and run the following commands to setup the server
+Navigate to the okok/node-api directory for directives on contributing the node-api
 
-- npm install
-- node server.js
-
+## Database 
+Database script of the project is located in the okok directry (preferentially postgresql). It would be best if contributors could create a mock server to work from following the conventions and namings in the database script.
