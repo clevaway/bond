@@ -26,8 +26,4 @@ jobs:
       - run: flutter pub outdated
       - run: flutter pub upgrade
       - run: flutter build apk --release
-      - name: Release apk
-      - uses: ncipollo/release-action@v1
-        with:
-          artifacts: 'build/app/outputs/apk/release/*.apk'
-          token: ${{secrets.TOKEN}}
+      
