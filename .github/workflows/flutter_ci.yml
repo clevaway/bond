@@ -18,7 +18,7 @@ jobs:
       - uses: actions/checkout@v1
       - uses: actions/setup-java@v1
         with:
-          java-version: '12.x'
+          java-version: "12.x"
       - uses: subosito/flutter-action@v1.5.0
         with:
           channel: "stable"
@@ -26,4 +26,9 @@ jobs:
       - run: flutter pub outdated
       - run: flutter pub upgrade
       - run: flutter build apk --release
-      
+      - name: APK Release
+      - uses: actions/checkout@v1
+      - uses: ncipollo/release-action@v1
+        with:
+          artifacts: "build/app/outputs/apk/release/*.apk"
+          token: ${{secrets.TOKEN}}
