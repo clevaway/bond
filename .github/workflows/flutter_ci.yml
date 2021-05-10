@@ -3,8 +3,6 @@ on:
   push:
     branches:
       - main
-    tags:
-      - v*
   pull_request:
     branches:
       - main
@@ -28,7 +26,3 @@ jobs:
       - run: flutter pub outdated
       - run: flutter pub upgrade
       - run: flutter build apk --release
-      - uses: ncipollo/release-action@v1
-        with:
-          artifacts: "build/app/outputs/apk/release/*.apk"
-          token: ${{secrets.TOKEN}}
