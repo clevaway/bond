@@ -3,6 +3,7 @@ const nodemailer = require('nodemailer');
 require('dotenv').config();
 const Cryptr = require('cryptr');
 const formattedHTMLInvite = require('./email/invite');
+const { v4: uuidv4 } = require('uuid')
 
 const con = mysql.createConnection({
   host: process.env.DB_HOST,
@@ -196,11 +197,145 @@ const editUser = async (request, response) => {
 
 };
 
+const compareRoomIds = (roomIds_1,roomIds_2) =>{
+  var flag = false
+
+  if(roomIds_1 == [] || roomIds_2 == []) return flag
+
+  //iterate roomIds of uid_1
+  for(var i = 0 ; i < roomIds_1.length ; i++){
+    //iterate roomIds of uid_2
+    
+    for(var j = 0 ; j < roomIds_2.length ; j++){
+      //if there is an equal then flag = true
+
+      if(roomIds_1[i].room_id == roomIds_2[j].room_id) flag=true
+    }
+  }
+
+  return flag
+}
+
+const bondUsers =async (request,response) =>{
+
+  //get variables
+  const uid_1 = request.body.uid_1
+  const uid_2 = request.body.uid_2
+  const roomID = uuidv4();
+  var roomIds_1 = [];
+  var roomIds_2 = [];
+
+  var returnErr = {
+      status : 1,
+      message: "Could not find user"
+  }
+
+  // check if uid_1 exists in database
+  con.query("SELECT name,uid from person WHERE uid='"+uid_1+"' LIMIT 1", function (err, result_1) {
+    
+    // check if uid_1 does not exist then return err
+    if(result_1.length == 0 || result_1 == undefined) return response.status(500).json(returnErr)
+
+    // check if uid_2 exists in database
+    con.query("SELECT name,uid from person WHERE uid='"+uid_2+"' LIMIT 1", function (err, result_2) {
+      
+      // check if uid_2 does not exist then return err
+      if(result_2.length == 0 || result_1 == undefined) return response.status(500).json(returnErr)
+
+        // get all room_id for uid_1
+        con.query("SELECT room_id from bond WHERE person_uid='"+uid_1+"'", function (err, result_roomIds_1) {
+
+          //if not empty then get results otherwise use default = []
+          if(result_roomIds_1.length != 0 ) roomIds_1 = result_roomIds_1
+
+          // get all room_id for uid_2
+          con.query("SELECT room_id from bond WHERE person_uid='"+uid_2+"'", function (err, result_roomIds_2) {
+
+          //if not empty then get results otherwise use default = []
+          if(result_roomIds_2.length != 0 ) roomIds_2 = result_roomIds_2
+
+          //compare to see if they have a similar room_id and return status 500 if true
+          if(compareRoomIds(roomIds_1,roomIds_2)){
+            returnErr.status = 3
+            returnErr.message = "Bond is already created"
+            response.status(500).json(returnErr)
+            return
+          }
+
+          //set the returnErr to another error type
+          returnErr.status = 2
+          returnErr.message = "There was a problem executing the request"
+
+          //start transaction
+          con.beginTransaction((err) =>{
+
+            // Failure transaction
+            if(err){
+              return con.rollback(() => {
+                throw response.status(500).json(returnErr)
+              })
+            }
+            
+            //room name default format
+            var room_name = result_1[0].name +" & "+ result_2[0].name 
+
+            //insert to room_table before bond_table
+            con.query("INSERT INTO room VALUES ('"+roomID+"','"+room_name+"')", function (err, result_room) {
+              // Failure transaction
+              if(err){
+                return con.rollback(() => {
+                  throw response.status(500).json(returnErr)
+                })
+              }
+              
+              //insert to bond with uid_1
+              con.query("INSERT INTO bond VALUES ('"+roomID+"','"+result_1[0].uid+"')", function (err, result_bond_1) {
+                // Failure transaction
+                if(err){
+                  return con.rollback(() => {
+                    throw response.status(500).json(returnErr)
+                  })
+                }
+                
+                  //insert to bond with uid_2
+                con.query("INSERT INTO bond VALUES ('"+roomID+"','"+result_2[0].uid+"')", function (err, result_bond_2) {
+                  // Failure transaction
+                  
+                  if(err){
+                    return con.rollback(() => {
+                      throw response.status(500).json(returnErr)
+                    })
+                  }else{
+                    con.commit((err)=>{
+                      // Failure transaction
+                      if(err){
+                        return con.rollback(() => {
+                          throw response.status(500).json(returnErr)
+                        })
+                      }
+
+                      //if success
+                      returnErr.status = 0
+                      returnErr.message = "Bond Success!"
+                      response.status(200).json(returnErr)
+                    })
+                  }
+                })
+              })
+            })
+          })
+        })
+      })
+    })
+  })
+}
+
 
 //  exporting of all the modules
 module.exports = {
     getAllusers,
     createUser,
     sendInvite,
-    editUser
+    editUser,
+    bondUsers
 };
