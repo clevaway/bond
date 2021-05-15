@@ -173,3 +173,50 @@ Navigate to the okok directory and run the following commands to setup the serve
     }
 ]
 ```
+## 5- Bond Users
+- Endpoint ``https://bond-api.vercel.app/bondUsers``
+- Method: `POST`
+- Data object (SEND in Body*): 
+```
+{
+    uid_1: "uid of target 1",
+    uid_2 : "uid of target 2"
+}
+```
+### RESPONSE
+#### In success
+```
+[
+    {
+        message: "Bond Success!",
+        status: 0
+    }
+]
+```
+#### In case if a passed uid doesn't exist
+```
+[
+    {
+        message: "Could not find user",
+        status: 1
+    }
+]
+```
+#### In case if there was a problem in executing database query
+```
+[
+    {
+        message: "There was a problem executing the request",
+        status: 2
+    }
+]
+```
+#### In case if bond already exists
+```
+[
+    {
+        message: "Bond is already created",
+        status: 3
+    }
+]
+```
