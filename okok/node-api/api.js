@@ -197,7 +197,7 @@ const editUser = async (request, response) => {
 };
 
 
-
+//  exporting of all the modules
 module.exports = {
     getAllusers,
     createUser,
