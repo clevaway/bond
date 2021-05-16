@@ -346,7 +346,7 @@ const getBondedUsers = async(request,response) =>{
   //get all room_ids of the target user
   con.query("SELECT room_id FROM bond WHERE person_uid ='"+targetUid+"'",(err , result_roomIds) =>{
     //if no bonded users
-    if(result_roomIds.length == 0) response.status(200).json(returnErr)
+    if(result_roomIds.length == 0) return response.status(200).json(returnErr)
 
     //turn result to an array
     for(var i = 0 ; i < result_roomIds.length ; i++){
