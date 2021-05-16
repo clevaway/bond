@@ -330,6 +330,54 @@ const bondUsers =async (request,response) =>{
   })
 }
 
+const getBondedUsers = async(request,response) =>{
+  
+  // initialize variables
+  const targetUid = request.params.uid
+  const roomIds = []
+  const personIds = []
+
+  //initialize error return
+  var returnErr = {
+      status : 1,
+      message : "No bonded users"
+  }
+
+  //get all room_ids of the target user
+  con.query("SELECT room_id FROM bond WHERE person_uid ='"+targetUid+"'",(err , result_roomIds) =>{
+    //if no bonded users
+    if(result_roomIds.length == 0) response.status(200).json(returnErr)
+
+    //turn result to an array
+    for(var i = 0 ; i < result_roomIds.length ; i++){
+      roomIds.push("'"+result_roomIds[i].room_id+"'")
+    }
+    
+    //get all person_uids of all room_ids
+    con.query("SELECT person_uid FROM bond WHERE room_id IN ("+roomIds+") AND person_uid != '"+targetUid+"'",(err, result_personUids)=>{
+      
+      returnErr.status = 2
+      returnErr.message = "There was a problem executing the request"
+
+      //if something wrong with db
+      if(err) return response.status(500).json(returnErr)
+
+      //turn result to array
+      for(i = 0 ; i < result_personUids.length ; i++){
+        personIds.push("'"+result_personUids[i].person_uid+"'")
+      }
+
+      // get all bonded users
+      con.query("SELECT * from person WHERE uid IN("+personIds+")",(err, result_people) => {
+        //if something wrong with db
+        if(err) return response.status(500).json(returnErr)
+
+        //in success
+        response.status(200).json(result_people)
+      })
+    })
+  })
+}
 
 //  exporting of all the modules
 module.exports = {
@@ -337,5 +385,7 @@ module.exports = {
     createUser,
     sendInvite,
     editUser,
-    bondUsers
+    bondUsers,
+    getBondedUsers
+    
 };

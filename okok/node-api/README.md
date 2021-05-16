@@ -220,3 +220,43 @@ Navigate to the okok directory and run the following commands to setup the serve
     }
 ]
 ```
+## 6- Get Bonded Users
+- Endpoint ``https://bond-api.vercel.app/getBondedUsers/:uid``
+- Method: `GET`
+- Data object (SEND in Parameters*): 
+```
+{
+    uid: "uid of target",
+}
+```
+### RESPONSE
+#### In success
+```
+[
+    {
+        "uid": "uid from google auth",
+        "name": "name from google auth",
+        "username": "send empty string (User can update their username later after signin)",
+        "photo": "profileURL from google auth",
+        "email": "email from google auth"
+    }
+]
+```
+#### In case if not bonded to anyone yet
+```
+[
+    {
+        message: "No bonded users",
+        status: 1
+    }
+]
+```
+#### In case if there was a problem in executing database query
+```
+[
+    {
+        message: "There was a problem executing the request",
+        status: 2
+    }
+]
+```
