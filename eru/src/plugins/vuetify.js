@@ -31,7 +31,7 @@ export default new Vuetify({
       },
       dark: {
         primary: '#FD4D4D',
-        neutralgray: '#1E1E1E',
+        neutralgray: '#181818',
       },
     },
   },
