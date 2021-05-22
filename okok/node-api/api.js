@@ -336,6 +336,7 @@ const getBondedUsers = async(request,response) =>{
   const targetUid = request.params.uid
   const roomIds = []
   const personIds = []
+  const roomAndPerson =[]
 
   //initialize error return
   var returnErr = {
@@ -354,7 +355,7 @@ const getBondedUsers = async(request,response) =>{
     }
     
     //get all person_uids of all room_ids
-    con.query("SELECT person_uid FROM bond WHERE room_id IN ("+roomIds+") AND person_uid != '"+targetUid+"'",(err, result_personUids)=>{
+    con.query("SELECT person_uid,room.roomname,room.id FROM bond RIGHT JOIN room ON bond.room_id=room.id  WHERE room_id IN ("+roomIds+") AND person_uid != '"+targetUid+"' ",(err, result_personUids)=>{
       
       returnErr.status = 2
       returnErr.message = "There was a problem executing the request"
@@ -364,16 +365,42 @@ const getBondedUsers = async(request,response) =>{
 
       //turn result to array
       for(i = 0 ; i < result_personUids.length ; i++){
+        //push to string array
         personIds.push("'"+result_personUids[i].person_uid+"'")
+
+        //push to entity relation
       }
+
+      
 
       // get all bonded users
       con.query("SELECT * from person WHERE uid IN("+personIds+")",(err, result_people) => {
         //if something wrong with db
         if(err) return response.status(500).json(returnErr)
 
+        //loop result_personUids
+        for(i = 0 ; i < result_personUids.length ; i++){
+          //loop result_people
+          for(j = 0 ; j < result_people.length ; j++){
+            //compare uids to return matched uids
+            if(result_personUids[i].person_uid == result_people[j].uid){
+              
+              //create the object to return
+              var returnObj ={
+                'room_id'   : result_personUids[i].id,
+                'roomname'  : result_personUids[i].roomname,
+                'person'    : result_people[j]
+              }
+              //push to roomAndPerson array
+              roomAndPerson.push(returnObj)
+            }
+          }
+        }
+
+        
+
         //in success
-        response.status(200).json(result_people)
+        response.status(200).json(roomAndPerson)
       })
     })
   })
