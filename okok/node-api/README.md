@@ -234,11 +234,15 @@ Navigate to the okok directory and run the following commands to setup the serve
 ```
 [
     {
-        "uid": "uid from google auth",
-        "name": "name from google auth",
-        "username": "send empty string (User can update their username later after signin)",
-        "photo": "profileURL from google auth",
-        "email": "email from google auth"
+        "room_id": "room id",
+        "roomname": "roomname",
+        "person": {
+            "uid": "uid from google auth",
+            "name": "name from google auth",
+            "username": "send empty string (User can update their username later after signin)",
+            "photo": "profileURL from google auth",
+            "email": "email from google auth"
+        }
     }
 ]
 ```
