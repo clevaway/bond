@@ -1,3 +1,5 @@
+const express = require('express');
+const app = express();
 const mysql = require('mysql');
 require('dotenv').config();
 
@@ -13,4 +15,10 @@ con.connect((err) => {
   if (err) throw err;
 
   console.log('Connected to db!');
+  // setting the port of the process or a default port
+  const port = process.env.PORT || 3000;
+  app.listen(port, () => {
+    console.log(`listening on port: ${port}`);
+  });
+
 });
