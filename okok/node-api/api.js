@@ -275,7 +275,7 @@ const bondUsers =async (request,response) =>{
           if(compareRoomIds(roomIds_1,roomIds_2)){
             returnErr.status = 3
             returnErr.message = "Bond is already created"
-            response.status(500).json(returnErr)
+            response.status(200).json(returnErr)
             return
           }
 
@@ -289,7 +289,7 @@ const bondUsers =async (request,response) =>{
             // Failure transaction
             if(err){
               return con.rollback(() => {
-                throw response.status(500).json(returnErr)
+                throw response.status(200).json(returnErr)
               })
             }
             
