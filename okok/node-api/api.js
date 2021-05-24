@@ -221,9 +221,12 @@ const compareRoomIds = (roomIds_1,roomIds_2) =>{
 
 const bondUsers =async (request,response) =>{
 
+  // declaring the key for sender's email decryption
+  const cryptr = new Cryptr('bondkey');
+
   //get variables
-  const uid_1 = request.body.uid_1
-  const uid_2 = request.body.uid_2
+  const senderDecryptedEmail = cryptr.decrypt(request.body.senderEncryptedEmail);  // decrypting the sender's email we got from frontend and will use to bond them
+  const uid_2 = request.body.receiverUid; // the person who accepted the bond invite
   const roomID = uuidv4();
   var roomIds_1 = [];
   var roomIds_2 = [];
@@ -232,7 +235,18 @@ const bondUsers =async (request,response) =>{
       status : 1,
       message: "Could not find user"
   }
+  // the email of the sender of the invite mail which is now decryped
+  console.log(senderDecryptedEmail)
+    
+  /**PLEASE NOTE
+   * In the below code uid_1 referes to the uid of sender
+   * and uid_2 referes to the uid of receiver of the invite
+   */
 
+  // get the uid_1(sender's uid) from database using their decrypted email
+  con.query("SELECT uid from person WHERE email='"+senderDecryptedEmail+"' LIMIT 1", function (err, result_uid_1_from_email) {
+    uid_1 = result_uid_1_from_email[0].uid; //getting the ui of the sender from their email
+    console.log(result_uid_1_from_email[0].uid);
   // check if uid_1 exists in database
   con.query("SELECT name,uid from person WHERE uid='"+uid_1+"' LIMIT 1", function (err, result_1) {
     
@@ -330,7 +344,8 @@ const bondUsers =async (request,response) =>{
         })
       })
     })
-  })
+  });
+});
 }
 
 const getBondedUsers = async(request,response) =>{
