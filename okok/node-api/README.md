@@ -179,9 +179,10 @@ Navigate to the okok directory and run the following commands to setup the serve
 - Data object (SEND in Body*): 
 ```
 {
-    uid_1: "uid of target 1",
-    uid_2 : "uid of target 2"
+    senderEncryptedEmail: "the encrypted email of the sender gotten from the invite link",
+    receiverUid : "uid of person accepting the invite"
 }
+
 ```
 ### RESPONSE
 #### In success
