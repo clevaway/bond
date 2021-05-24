@@ -23,6 +23,7 @@ app.get('/', (req, res) => {
 });
 
 // calling for implimentation of getting all users
+// ?uid=x to get 1 user
 app.get('/users', api.getAllusers);
 
 // sending bond invite
@@ -36,6 +37,9 @@ app.post('/editUser',api.editUser);
 
 // post request to bond users 
 app.post('/bondUsers',api.bondUsers);
+
+// get bonded users
+app.get('/getBondedUsers/:uid',api.getBondedUsers)
 
 // setting the port of the process or a default port
 const port = process.env.PORT || 3000;
