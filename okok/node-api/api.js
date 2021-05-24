@@ -25,7 +25,10 @@ const getAllusers = async (request, response) => {
   con.query('SELECT * FROM person', (err, result) => {
     // handling any errors
     if (err) throw err;
-
+    result.map(item => {
+      item.email = item.email.replace(/^(.{2})[^@]+/, "$1***");;
+      item.uid = item.uid.replace(/^(.{2})[^@]+/, "$1***");;
+    })
     response.status(200).json(result);
   });
 }else{
