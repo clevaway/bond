@@ -1,18 +1,32 @@
 <template>
   <div>
-    <v-container id="wrapper" class="pa-12 mx-auto mt-5" elevation="12" max-width="500"
-      ><center>
+    <v-container id="wrapper" class="pa-12 mx-auto mt-5" elevation="12" max-width="500">
+      <center>
         <h3 class="title font-weight-regular mb-5">Add your partner to get started.</h3>
         <BondAvatars
+          v-if="partnerInfo && currentUser"
+          :yourPhoto="currentUser.photoURL"
+          :partnerPhoto="partnerInfo.person.photo"
+        />
+        <BondAvatars
+          v-else
           :yourPhoto="currentUser.photoURL"
           partnerPhoto="https://www.voanews.com/themes/custom/voa/images/Author__Placeholder.png"
         />
         <br />
-        <p class="mt-3 font-weight-light">You & Partner</p>
-        <br />
-        <AddPartner />
-        <br />
-        <div class="mx-2 mt-5">
+        <p class="mt-3 font-weight-light" v-if="partnerInfo">You & {{partnerInfo.person.name}}</p>
+        <p class="mt-3 font-weight-light" v-else>You & Your partner</p>
+
+        <!-- add partner button component -->
+        <span v-if="!partnerInfo">
+          <br />
+          <AddPartner />
+          <br />
+        </span>
+
+        <!-- add partner button component -->
+
+        <div class="mx-2 mt-5" v-if="partnerInfo">
           <LikeButton @click="pingPartner" />
         </div>
         <br />
@@ -58,6 +72,7 @@ export default {
   },
   data() {
     return {
+      partnerInfo: null,
       currentUser: store.state.currentUser,
       snackbarNotification: {
         snackMessage: 'No data',
@@ -69,8 +84,28 @@ export default {
   },
   mounted: function () {
     this.getCurrentUserLoggedIn();
+    this.getBonded();
   },
   methods: {
+    // function that checks if they are bonded or not
+    async getBonded() {
+      try {
+        let response = await this.axios.get(
+          `https://bond-api.vercel.app/getBondedUsers/${store.state.currentUser.uid}`
+        );
+        response = response.data[0];
+        this.partnerInfo = response;
+        console.log('Return data => ');
+        console.log(response);
+      } catch (error) {
+        // if an error occures
+        console.error('There was an error =>' + error);
+        this.snackbarNotification.status = true;
+        this.snackbarNotification.color = 'red';
+        this.snackbarNotification.snackMessage = 'Error:' + error.message;
+        this.snackbarNotification.displayTime = 6000;
+      }
+    },
     // function to get curren logged in user
     getCurrentUserLoggedIn() {
       this.currentUser = store.state.currentUser;
