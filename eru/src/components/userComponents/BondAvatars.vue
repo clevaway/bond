@@ -1,13 +1,9 @@
 <template>
   <span>
-    <v-avatar class="profileBorder __you" color="neutralgray" size="120">
+    <v-avatar class="profileBorder" color="neutralgray" size="120">
       <v-img contain :src="yourPhoto" alt="default" />
     </v-avatar>
-    <v-avatar
-      class="profileBorder __partnerOverlay"
-      color="neutralgray"
-      size="120"
-    >
+    <v-avatar class="profileBorder __partnerOverlay __partner" color="neutralgray" size="120">
       <v-img contain :src="partnerPhoto" alt="default" />
     </v-avatar>
   </span>
@@ -36,7 +32,7 @@ export default {
   position: sticky;
   margin-left: -46px;
 }
-.__you {
+.__partner {
   z-index: 1;
 }
 </style>

@@ -1,12 +1,6 @@
 <template>
   <span>
-    <v-card
-      id="wrapper"
-      class="pa-12 mx-auto"
-      elevation="0"
-      height="350"
-      max-width="500"
-    >
+    <v-card id="wrapper" class="pa-12 mx-auto" elevation="0" height="350" max-width="500">
       <v-row justify="center">
         <v-card-title class="title font-weight-regular justify-space-between">
           <span>Bond Invite</span>
@@ -28,12 +22,12 @@
           seconds while we bond you with your partner
           <br />
 
-          <v-progress-circular
-            class="mt-8"
-            :size="50"
-            color="primary"
-            indeterminate
-          ></v-progress-circular>
+          <div class="mt-8">
+            <v-progress-circular v-if="showLoadingState" :size="50" color="primary" indeterminate></v-progress-circular>
+            <div v-else>
+              <v-icon x-large color="primary">mdi-check-circle</v-icon>
+            </div>
+          </div>
         </center>
         <!-- /message -->
       </v-row>
@@ -52,8 +46,7 @@
             text
             v-bind="attrs"
             @click="snackbarNotification.status = false"
-            >Close</v-btn
-          >
+          >Close</v-btn>
         </template>
       </v-snackbar>
       <!-- / notification snackbar -->
@@ -62,20 +55,20 @@
 </template>
 
 <script>
-import store from "@/store";
+import store from '@/store';
 // import firebase from "firebase";
 
 export default {
   components: {},
   data() {
     return {
-      bondkey: null, // the bondkey to be sent to the backend
+      bondkey: null, // the bondkey to be sent to the backend (senderEncryptedEmail)
       currentUser: store.state.currentUser, //currently logged in user
+      showLoadingState: true,
       snackbarNotification: {
-        snackMessage:
-          "Note: We are still building this feature! Please check back letter",
-        status: true,
-        color: "primary",
+        snackMessage: '',
+        status: false,
+        color: 'primary',
         displayTime: 7000,
       },
     };
@@ -95,21 +88,67 @@ export default {
       if (this.$route.query.bondkey) {
         //check if they are login
         if (!store.state.currentUser) {
-          this.$router.push("/auth?bondkey=" + this.$route.query.bondkey);
+          this.$router.push('/auth?bondkey=' + this.$route.query.bondkey);
         } else {
           // everything is good that is, bondkey is true and they are logged in
           this.bondkey = this.$route.query.bondkey;
           console.log(this.bondkey);
+          // run the bondUser function when everything is good
+          this.bondUsers();
         }
       } else {
         // if the data doesn't contain any params in the URL redirect them
         // if user is login redirect to home
         if (store.state.currentUser) {
-          this.$router.push("/");
+          this.$router.push('/');
         } else {
           // redirect to the login
-          this.$router.push("/auth");
+          this.$router.push('/auth');
         }
+      }
+    },
+    async bondUsers() {
+      const bondObject = {
+        senderEncryptedEmail: this.bondkey,
+        receiverUid: store.state.currentUser.uid,
+      };
+      console.log(bondObject);
+      try {
+        let response = await this.axios.post(`https://bond-api.vercel.app/bondUsers`, bondObject);
+        response = response.data;
+        console.log('Return data => ');
+        console.log(response);
+        // display response to user
+        // status code 0 is success
+        if (response.status == 0) {
+          console.log(response.message);
+          this.snackbarNotification.status = true;
+          this.snackbarNotification.color = 'blue';
+          this.snackbarNotification.snackMessage = response.message;
+          this.snackbarNotification.displayTime = 5000;
+          this.showLoadingState = false;
+          // delay for a little while before redirect
+          setTimeout(function () {
+            window.location.href = '/';
+          }, 4000);
+        } else {
+          this.snackbarNotification.status = true;
+          this.snackbarNotification.color = 'red';
+          this.snackbarNotification.snackMessage = response.message;
+          this.snackbarNotification.displayTime = 5000;
+          this.showLoadingState = false;
+          // delay for a little while before redirect
+          setTimeout(function () {
+            window.location.href = '/';
+          }, 4000);
+        }
+      } catch (error) {
+        // if an error occures
+        console.error('There was an error =>' + error);
+        this.snackbarNotification.status = true;
+        this.snackbarNotification.color = 'red';
+        this.snackbarNotification.snackMessage = 'Error:' + error.message;
+        this.snackbarNotification.displayTime = 6000;
       }
     },
   },
