@@ -8,16 +8,16 @@ const cors = require('cors');
 app.use(cors());
 
 io.on('connection', (client) => {
-  console.log(`A user connected => ${client.id}`);
+  console.log(`Connected => ${client.id}`);
   // client.on('event', data => { /* … */ });
   // When client disconnects
   client.on('disconnect', () => {
-    console.log(`Client => ${client.id} disconnected`);
+    console.log(`Disconnected => ${client.id}`);
   });
   //  create or join a room event from frontend
-  client.on('createRoom', (room) => {
+  client.on('createRoom', (room, userJoining) => {
     client.join(room);
-    console.log(`Socket ${client.id} created or joined a room ${room}`);
+    console.log(`${userJoining} joined room => ${room}`);
     io.to(room).emit('createRoomStatus', `Only users in Room => ${room} can see this message`);
   });
 
@@ -28,15 +28,15 @@ io.on('connection', (client) => {
   });
 
   //  to ping server from test
-  client.on('pingServer', (message) => {
-    console.log(message);
-    client.emit('message', `Message from backed, with client id => ${client.id}`);
-  });
+  // client.on('pingServer', (message) => {
+  //   console.log(message);
+  //   client.emit('message', `Message from backed, with client id => ${client.id}`);
+  // });
   // sending data to client side
-  client.on('video', (videoLink) => {
-    client.emit('video', videoLink);
-    console.log(`sending to clients => ${videoLink}`);
-  });
+  // client.on('video', (videoLink) => {
+  //   client.emit('video', videoLink);
+  //   console.log(`sending to clients => ${videoLink}`);
+  // });
 });
 
 server.listen(3000, () => {
