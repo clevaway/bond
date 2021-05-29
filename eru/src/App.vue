@@ -6,7 +6,7 @@
     <!-- show footer only if the user isn't logged in -->
     <Footer v-if="!loggedIn" />
     <!-- show app bar only if the user is logged in -->
-    <Appbar v-if="loggedIn" routeToHome="/" routeToProfile="/u/profile" />
+    <Appbar v-if="loggedIn" routeToHome="/" routeToProfile="/u/profile" routeToChat="/u/chat" />
   </v-app>
 </template>
 

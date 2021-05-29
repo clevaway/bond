@@ -6,6 +6,7 @@ import Auth from '../views/Auth.vue';
 import Profile from '../views/Profile.vue';
 import AcceptInvite from '../views/AcceptInvite.vue';
 import userComponents from '../views/userComponents.vue';
+import Chat from '../views/Chat.vue';
 
 Vue.use(VueRouter);
 
@@ -40,6 +41,11 @@ const routes = [
     path: '/components',
     name: 'userComponents',
     component: userComponents,
+  },
+  {
+    path: '/u/chat',
+    name: 'Chat',
+    component: Chat,
   },
   {
     path: '/about',
