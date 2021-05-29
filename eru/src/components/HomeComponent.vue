@@ -2,7 +2,8 @@
   <div>
     <v-container id="wrapper" class="pa-12 mx-auto mt-5" elevation="12" max-width="500">
       <center>
-        <h3 class="title font-weight-regular mb-5">Add your partner to get started.</h3>
+        <h2 v-if="partnerInfo && currentUser" class="title font-weight-regular mb-5">Bond</h2>
+        <h3 v-else class="title font-weight-regular mb-5">Add your partner to get started.</h3>
         <BondAvatars
           v-if="partnerInfo && currentUser"
           :yourPhoto="currentUser.photoURL"

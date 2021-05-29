@@ -5,6 +5,9 @@
         <v-tab dark :to="routeToHome" class="primary--text">
           <v-icon color="primary">mdi-fire</v-icon>
         </v-tab>
+        <v-tab dark :to="routeToChat" class="primary--text">
+          <v-icon color="primary">mdi-email</v-icon>
+        </v-tab>
         <v-tab :to="routeToProfile" class="primary--text">
           <v-icon color="primary">mdi-account-circle</v-icon>
         </v-tab>
@@ -16,6 +19,7 @@
 export default {
   props: {
     routeToHome: String,
+    routeToChat: String,
     routeToProfile: String,
   },
 };
