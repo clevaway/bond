@@ -16,11 +16,9 @@ class _TabViewState extends State<TabView> {
       // then push to to HomeScreen() else Push to AddPartnerScreen()
       // using a ternary operator
       'page': AddPartnerScreen(),
-      'title': 'Categories',
     },
     {
       'page': UserProfile(),
-      'title': 'Your Favorite',
     },
   ];
   int _selectedPageIndex = 0;
