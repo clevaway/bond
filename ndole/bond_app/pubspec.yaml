@@ -23,11 +23,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  another_flushbar: ^1.10.23
-  cloud_firestore: ^2.3.0
+  another_flushbar: ^1.10.24
+  cloud_firestore: ^2.4.0
   cupertino_icons: ^1.0.3
-  firebase_auth: ^2.0.0
-  firebase_core: ^1.3.0
+  firebase_auth: ^3.0.1
+  firebase_core: ^1.4.0
   font_awesome_flutter: ^9.1.0
   google_fonts: ^2.1.0
   google_sign_in: ^5.0.4

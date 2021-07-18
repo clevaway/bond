@@ -39,7 +39,7 @@ class _UserProfileState extends State<UserProfile> {
                           child: CircleAvatar(
                             backgroundColor: Colors.grey[200],
                             backgroundImage:
-                                NetworkImage('${_auth.currentUser.photoURL}'),
+                                NetworkImage('${_auth.currentUser!.photoURL}'),
                             // child: ,
                           ),
                         ),
@@ -47,7 +47,7 @@ class _UserProfileState extends State<UserProfile> {
                           height: 30,
                         ),
                         Text(
-                          '${_auth.currentUser.displayName}',
+                          '${_auth.currentUser!.displayName}',
                           style: GoogleFonts.nunito(
                             fontSize: 20,
                           ),
@@ -91,7 +91,7 @@ class _UserProfileState extends State<UserProfile> {
                 ),
               ),
               Text(
-                '${_auth.currentUser.displayName}',
+                '${_auth.currentUser!.displayName}',
                 style: GoogleFonts.nunito(
                   fontSize: 18,
                 ),
@@ -113,7 +113,7 @@ class _UserProfileState extends State<UserProfile> {
                 ),
               ),
               Text(
-                '${_auth.currentUser.email}',
+                '${_auth.currentUser!.email}',
                 style: GoogleFonts.nunito(
                   fontSize: 18,
                 ),

@@ -14,7 +14,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final TextEditingController _email = TextEditingController();
 
-  showAddPartnerDialog() {
+  Dialog? showAddPartnerDialog() {
     showDialog(
       context: context,
       builder: (_) {
@@ -32,10 +32,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     TextFormField(
                       controller: _email,
                       validator: (val) {
-                        if (val.isEmpty) {
-                          return 'Please enter an Email';
-                        } else {
+                        if (val != null && val.isNotEmpty) {
                           return null;
+                        } else {
+                          return 'Please enter an Email';
                         }
                       },
                       decoration: InputDecoration(
@@ -57,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
             TextButton(
               onPressed: () {
                 var form = _formKey.currentState;
-                if (form.validate()) {
+                if (form != null && form.validate()) {
                   Navigator.pop(context);
                 }
               },
@@ -70,11 +70,10 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   // function to get only first name
-  String getOnlyFirstName() {
-    var mainFromFirebase = _auth.currentUser.displayName;
+  String? getOnlyFirstName() {
+    String mainFromFirebase = _auth.currentUser!.displayName.toString();
     String firstUserName =
         mainFromFirebase.substring(0, mainFromFirebase.indexOf(' '));
-
     return firstUserName;
   }
 
@@ -105,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(80),
                               border: Border.all(
-                                color: Colors.grey[200],
+                                color: Colors.grey.shade200,
                                 style: BorderStyle.solid,
                                 width: 8,
                               ),
@@ -143,19 +142,19 @@ class _HomeScreenState extends State<HomeScreen> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(80),
                               border: Border.all(
-                                color: Colors.grey[200],
+                                color: Colors.grey.shade200,
                                 style: BorderStyle.solid,
                                 width: 8,
                               ),
                               image: DecorationImage(
                                 image: NetworkImage(
-                                    '${_auth.currentUser.photoURL}'),
+                                    '${_auth.currentUser!.photoURL}'),
                                 fit: BoxFit.cover,
                               ),
                             ),
                           ),
                           Text(
-                            getOnlyFirstName(),
+                            getOnlyFirstName().toString(),
                             style: GoogleFonts.roboto(
                               fontSize: 20,
                             ),

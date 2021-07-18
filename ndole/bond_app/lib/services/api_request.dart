@@ -13,11 +13,11 @@ class ApiRequest {
       var req = await http.post(
         Uri.parse(authUser),
         body: {
-          'uid': _auth.currentUser.uid,
-          'name': _auth.currentUser.displayName,
+          'uid': _auth.currentUser!.uid,
+          'name': _auth.currentUser!.displayName,
           'username': '',
-          'photo': _auth.currentUser.photoURL,
-          'email': _auth.currentUser.email,
+          'photo': _auth.currentUser!.photoURL,
+          'email': _auth.currentUser!.email,
         },
       );
       var res = json.decode(req.body);

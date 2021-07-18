@@ -1,15 +1,15 @@
 class UserModels {
-  final String uid;
+  final String? uid;
 
   UserModels({this.uid});
 }
 
 class UsersDetailsModel {
-  final String uid;
-  final String name;
-  final String username;
-  final String email;
-  final String photo;
+  final String? uid;
+  final String? name;
+  final String? username;
+  final String? email;
+  final String? photo;
 
   UsersDetailsModel({
     this.uid,
