@@ -10,7 +10,7 @@ class TabView extends StatefulWidget {
 }
 
 class _TabViewState extends State<TabView> {
-  final List<Map<String, Object>> _pages = [
+  final List<Map<String, Widget>> _pages = [
     {
       // we will do the checking for if the user has a partner or not
       // then push to to HomeScreen() else Push to AddPartnerScreen()

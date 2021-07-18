@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 class Wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserModels>(context);
+    final user = Provider.of<UserModels?>(context);
     if (user == null) {
       return GoogleSignInScreen();
     } else {

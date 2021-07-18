@@ -1,19 +1,16 @@
 import 'package:bond_app/const_values.dart';
 import 'package:flutter/material.dart';
 
-class DefaultButton extends StatefulWidget {
-  final String title;
-  final Function onPress;
+class DefaultButton extends StatelessWidget {
+  final String? title;
+  final VoidCallback? onPress;
 
   DefaultButton({
+    Key? key,
     @required this.title,
     @required this.onPress,
-  });
-  @override
-  _DefaultButtonState createState() => _DefaultButtonState();
-}
+  }) : super(key: key);
 
-class _DefaultButtonState extends State<DefaultButton> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,9 +22,9 @@ class _DefaultButtonState extends State<DefaultButton> {
       ),
       child: TextButton(
         style: ButtonStyle(),
-        onPressed: widget.onPress,
+        onPressed: onPress,
         child: Text(
-          widget.title,
+          title!,
           style: TextStyle(
             color: Colors.white,
           ),
