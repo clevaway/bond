@@ -1,5 +1,5 @@
 import 'package:bond_app/utils/default_button.dart';
-import 'package:bond_app/utils/firebase_user_call.dart';
+// import 'package:bond_app/utils/firebase_user_call.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,6 +10,7 @@ class AddPartnerScreen extends StatefulWidget {
 }
 
 class _AddPartnerScreenState extends State<AddPartnerScreen> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +37,7 @@ class _AddPartnerScreenState extends State<AddPartnerScreen> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(80),
                   image: DecorationImage(
-                    image: NetworkImage(userImage().toString()),
+                    image: NetworkImage('${_auth.currentUser!.photoURL}'),
                     fit: BoxFit.cover,
                   ),
                 ),
